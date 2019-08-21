@@ -1,4 +1,0 @@
-MONGO_URI = "mongodb://ganesan:ganesan09@ds351807.mlab.com:51807/revit08"
-SECRET_OR_KEY = "JJCeT"
-googleClientID = "157852765565-21eh7v2tvqv5r7t8fg28o6073kqt3so3.apps.googleusercontent.com"
-googleClientSecret = "HIdaDVc1QuAMftpM4mmConhE"
