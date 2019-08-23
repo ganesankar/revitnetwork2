@@ -20,6 +20,8 @@ import City from "./views/City";
 import Home from "./views/Home";
 import Cities from "./views/Cities";
 import Students from "./views/Students";
+import Student from "./views/Student";
+import StudentEdit from "./views/StudentEdit";
 import Login from "./views/Login";
 import Signup from "./views/Signup";
 import Cmsitin from "./views/Cmsitin";
@@ -68,6 +70,8 @@ class App extends Component {
                 <Route exact path="/signup" component={Signup} />
                 <Route exact path="/cities" component={Cities} />
                 <Route exact path="/students" component={Students} />
+                <Route exact path="/student/:url" component={Student} />
+                <Route exact path="/student/edit/:url" component={StudentEdit} />
                 <PrivateRoute exact path="/cms" component={Cms} />
                 <PrivateRoute exact path="/cmsitinerary" component={Cmsitin} />
                 <PrivateRoute

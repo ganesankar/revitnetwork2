@@ -1,6 +1,11 @@
 {
-  "name": "mytinerary",
+  "name": "revitnetwork2",
   "version": "0.1.0",
+  "description": "This",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ganesankar/revitnetwork2.git"
+  },
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
@@ -12,8 +17,9 @@
     "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
     "dotenv": "^7.0.0",
+    "ejs": "^2.6.2",
     "express": "^4.16.4",
-    "express-session": "^1.15.6",
+    "express-session": "^1.16.2",
     "gravatar": "^1.8.0",
     "jsonwebtoken": "^8.4.0",
     "lodash": "^4.17.11",
@@ -32,6 +38,7 @@
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "request": "^2.88.0",
+    "rootpath": "^0.1.2",
     "source-map-explorer": "^1.8.0",
     "validator": "^10.11.0"
   },
@@ -52,15 +59,10 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "server.js",
   "devDependencies": {
     "nodemon": "^1.18.9",
     "redux-devtools-extension": "^2.13.8"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ganesankar/revitnetwork2.git"
   },
   "author": "Jorge de La Fuente",
   "license": "MIT",

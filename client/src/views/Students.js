@@ -1,11 +1,12 @@
 import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
 import {
   Card,
   Container,
   CardHeader,
   CardBody,
   CardFooter,
-  CardTitle,
+  Button,
   Row,
   Col,
   Input,
@@ -29,14 +30,7 @@ class Students extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cities: [],
-      city: "",
-      country: "",
-      query: "",
-      error: null,
-      text: "",
-
-      // filteredCities: []
+      students: []
     };
   }
 
@@ -44,7 +38,6 @@ class Students extends Component {
     this.props.fetchStudents();
   }
 
-  // SEARCH WITH DEBOUNCE
   handleSearch = debounce(text => {
     this.setState({
       query: text
@@ -52,29 +45,30 @@ class Students extends Component {
   }, 500);
 
   render() {
-    let filteredCities = this.props.cities.cities.filter(city => {
+    console.log(this.props.students);
+    /*
+    let filteredstudents = this.props.students.students.filter(student => {
       return (
-        city.cityname.toLowerCase().includes(this.state.query.toLowerCase()) ||
-        city.country.toLowerCase().includes(this.state.query.toLowerCase())
+        student.studentname.toLowerCase().includes(this.state.query.toLowerCase()) ||
+        student.nickname.toLowerCase().includes(this.state.query.toLowerCase())
       );
     });
-
+     */
+    let filteredstudents = this.props.students.students || [];
     return (
       <div>
         <section className="section section-lg">
           <Container>
             <Row className="justify-content-center">
-              <Col lg="12">
+              <Col lg="4">
                 <h1 className="text-center">
-                  <FontAwesomeIcon icon={faUserGraduate}  />
+                  <FontAwesomeIcon icon={faUserGraduate} />
                   Students
                 </h1>
 
-                <hr className="line-primary" />
+                <hr className="line-primary m-auto" />
                 <Row className="row-grid justify-content-center">
-                  <Col lg="6">
-                    
-                  </Col>
+                  <Col lg="6"></Col>
                   <Col lg="6">
                     {" "}
                     <Input
@@ -91,45 +85,76 @@ class Students extends Component {
                 </Row>
               </Col>
             </Row>
-            {filteredCities.length < 1 ? (
+            {filteredstudents.length < 1 ? (
               <div className="paragraphText">
                 There are no destinations matching your search query.
               </div>
             ) : (
               <React.Fragment>
-                {filteredCities.map(city => {
+                {filteredstudents.map(student => {
                   return (
-                    <React.Fragment key={city._id}>
+                    <React.Fragment key={student._id}>
                       <Row>
                         {" "}
-                        <Col lg="12">
-                          <Link
-                            to={{
-                              pathname: "/student/" + city.url,
-                              state: {
-                                city: city.cityname,
-                                country: city.country,
-                                url: city.flagimg
-                              }
-                            }}
-                            className="citylist"
-                          >
-                            <Card>
-                              <Media>
-                                <Media left href="#">
-                                  <Media
-                                    object
-                                    data-src={require("../images/revit.png")}
-                                    alt="Generic placeholder image"
-                                  />
-                                </Media>
-                                <Media body>
-                                  <Media heading>{city.cityname}</Media>
-                                  {city.country}
-                                </Media>
-                              </Media>
-                            </Card>
-                          </Link>
+                        <Col lg="4">
+                          <Card className="card-coin card-plain">
+                            <div >
+                              <Link
+                                to={{
+                                  pathname: "/student/" + student.url,
+                                  state: {
+                                    city: student.cityname,
+                                    country: student.country,
+                                    url: student.flagimg
+                                  }
+                                }}
+                                className="citylist "
+                              >
+                                <div className="icon icon-primary">
+                                  {student.flagimg ? (
+                                    <img alt="cmsImage" className="img-center img-fluid  rounded-circle" src={student.flagimg} />
+                                    
+                                  ) : (
+                                    <FontAwesomeIcon
+                                      icon={faUserGraduate}
+                                      size="4x"
+                                      className={`text-default`}
+                                    />
+                                  )}
+                                </div>
+                                <h4 className="info-title">
+                                  {student.studentname}
+                                </h4>
+                              </Link>
+                              <hr className="line-primary" />
+                              <p>
+                                {student.emailid} <br />
+                                {student.location}
+                                <br />
+                                {student.nickname}
+                              </p>
+                            </div>
+                            <CardFooter className="text-center">
+                              <NavLink
+                                to={{
+                                  pathname: "/student/edit/" + student.url
+                                }}
+                              >
+                                <Button className="btn-simple" color="primary">
+                                  VIEW ALL
+                                </Button>
+                              </NavLink>
+                              <NavLink
+                                to={{
+                                  pathname: "/student/edit/" + student.url
+                                }}
+                              >
+                                <Button className="btn-simple" color="success">
+                                  VIEW ALL
+                                </Button>
+                              </NavLink>
+                            </CardFooter>
+                          </Card>
                         </Col>
                       </Row>
                     </React.Fragment>
@@ -141,7 +166,7 @@ class Students extends Component {
         </section>
         <div className="citysearchflex"></div>
 
-        {/* CITIES */}
+        {/* students */}
         <div></div>
       </div>
     );
@@ -150,14 +175,14 @@ class Students extends Component {
 
 const mapStateToProps = state => {
   return {
-    cities: state.cities,
+    students: state.students,
     favid: state.favid,
     profile: state.profile
   };
 };
 
 Students.propTypes = {
-  cities: PropTypes.object,
+  students: PropTypes.object,
   fetchStudents: PropTypes.func,
   getCurrentProfile: PropTypes.func
 };

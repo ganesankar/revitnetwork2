@@ -5,8 +5,19 @@ import { Link } from "react-router-dom";
 import { createCity } from "../actions/cmsActions";
 
 import Header from "../components/layout/Header";
-import { Button, Form, FormGroup, Label, Input, FormText, Card , Modal, ModalHeader, ModalBody, ModalFooter,} from 'reactstrap';
-
+import {
+  Button,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  FormText,
+  Card,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter
+} from "reactstrap";
 
 class Cmscity extends Component {
   constructor() {
@@ -106,7 +117,7 @@ class Cmscity extends Component {
           <Card raised className="commentForm">
             <form encType="multipart/form-data" onSubmit={this.onSubmit}>
               <div>
-                <Input 
+                <Input
                   className="commentFormInput"
                   id="outlined-with-placeholder"
                   label="Please enter City Name:"
@@ -124,7 +135,7 @@ class Cmscity extends Component {
                 <div className="invalid-feedback">{errors.cityname}</div>
               )}
               <div>
-                <Input 
+                <Input
                   className="commentFormInput"
                   id="outlined-with-placeholder"
                   label="Please enter City Country:"

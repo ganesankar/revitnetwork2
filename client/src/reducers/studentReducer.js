@@ -1,7 +1,9 @@
-import { FETCH_STUDENTS } from "../actions/Types";
+import { FETCH_STUDENTS, FETCH_STUDENT, ERROR_STUDENT } from "../actions/Types";
 
 const initialState = {
-  students: []
+  students: [],
+  student: {},
+  studentUpdateError: {}
 };
 
 export default function(state = initialState, action) {
@@ -10,6 +12,16 @@ export default function(state = initialState, action) {
       return {
         ...state,
         students: action.payload
+      };
+      case FETCH_STUDENT:
+      return {
+        ...state,
+        student: action.payload
+      };
+      case ERROR_STUDENT:
+      return {
+        ...state,
+        studentUpdateError: action.payload
       };
     default:
       return state;

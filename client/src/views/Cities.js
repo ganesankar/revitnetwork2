@@ -12,7 +12,6 @@ import {  Input} from 'reactstrap';
 // import Card from "@material-ui/core/Card";
 // import CardContent from "@material-ui/core/CardContent";
 // import Typography from "@material-ui/core/Typography";
-import ComplexCityButton from "./../components/layout/ComplexCityButton";
 
 class Cities extends Component {
   constructor(props) {
@@ -40,6 +39,7 @@ class Cities extends Component {
   }, 500);
 
   render() {
+    console.log(this.props.cities);
     let filteredCities = this.props.cities.cities.filter(city => {
       return (
         city.cityname.toLowerCase().includes(this.state.query.toLowerCase()) ||
@@ -86,13 +86,7 @@ class Cities extends Component {
                     >
                       <div className="flexIcons">
                         <div className="flexLink">
-                          <ComplexCityButton
-                            city={city.cityname}
-                            country={city.country}
-                            title={city.cityname}
-                            src={city.flagimg}
-                            url={city.url}
-                          />
+                         fdf
                         </div>
                       </div>
                       <div className="itineraryCard" />

@@ -11995,7 +11995,7 @@ min-height:100vh;}
 
 @media (min-width: 768px) {
   .info:first-of-type {
-    padding-top: 60%; } }
+     } }
 
 .progress-container {
   position: relative; }
@@ -14484,7 +14484,7 @@ input.datetimepicker[data-color="yellow"] + .bootstrap-datetimepicker-widget {
 .text-on-back {
   position: relative;
   z-index: 1;
-  font-size: 9.5em;
+  font-size: 4.5em;
   margin-left: -4px;
   font-weight: 900;
   color: rgba(255, 255, 255, 0.2) !important; }

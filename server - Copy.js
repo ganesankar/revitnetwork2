@@ -2,10 +2,13 @@ require("dotenv").config();
 require('rootpath')();
 const ejs = require('ejs');
 const express = require("express");
+const session = require('express-session');
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const cookierParser = require("cookie-parser");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const path = require("path");
 
 //ROUTES
@@ -18,9 +21,9 @@ const cmsdb = require("./routes/api/cmsdb");
 const profiledb = require("./routes/api/profiledb");
 const usersdb = require("./routes/api/usersdb");
 
-const login = require("./routes/login");
-
 //ROUTES
+
+const login = require("./routes/login");
 require("./models/usermodel");
 
 // CONNECT TO MONGODB
@@ -33,13 +36,74 @@ mongoose
 // ==============================================
 const app = express();
 const appAdmin = express();
+var router = express.Router();
+appAdmin.use(express.static(path.join(__dirname, 'login')));
+
+
 appAdmin.engine('html', ejs.renderFile);
 appAdmin.set('view engine', 'html');
 appAdmin.set('views', __dirname + '/login');
-appAdmin.use(express.static(path.join(__dirname, 'login')));
 appAdmin.use((req, res, next) => {
     return res.sendFile(path.resolve( __dirname, 'login' , 'index.html'));
   });
+const User = require("./models/usermodel");
+router.post('/', function(request, response) {
+	console.log('fucked not');
+	console.log(request);
+	var username = request.body.username;
+	var password = request.body.password;
+	if (username && password) {
+		///////////
+		User.findOne({ email }).then(user => {
+    // Check for user
+    if (!user) {
+		console.log('fucked not');
+      errors.email = "User not found";
+      return res.status(404).json(errors);
+    }
+    // Check Password
+    bcrypt.compare(password, user.password).then(isMatch => {
+      if (isMatch) {
+		  console.log('fucked not');
+        // User Matched
+        // Create JWT Payload
+        const payload = {
+          id: user.id,
+          username: user.username,
+          avatar: user.avatar
+          // favorites: user.favoritesuser.favorites
+        };
+        // Sign Token
+        jwt.sign(
+          payload,
+          keys.secretOrKey,
+          { expiresIn: 3600 },
+          (err, token) => {
+            res.json({
+              success: true,
+              token: "Bearer " + token
+            });
+          }
+        );
+		console.log('fucked');
+		request.session.loggedin = true;
+		request.session.username = username;
+		response.redirect('/home');
+        // res.json({ msg: "Email and password success" });
+      } else {
+		  console.log('fucked not');
+        errors.password = "Password incorrect";
+        return res.status(400).json(errors);
+      }
+    });
+  });
+		////////////
+		
+	} else {
+		response.send('Please enter Username and Password!');
+		response.end();
+	}
+});
 // BODY PARSER MIDDLEWARE
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
