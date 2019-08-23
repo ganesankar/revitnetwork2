@@ -12,7 +12,6 @@ import { Provider } from "react-redux";
 
 // CSS
 import "./styles/App.css";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Navbar from "./components/layout/Navbar";
 import BottomNav from "./components/layout/BottomNav";
 

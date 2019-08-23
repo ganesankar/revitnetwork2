@@ -1,17 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import compose from "recompose/compose";
-import MobileStepper from "@material-ui/core/MobileStepper";
-// import Paper from "@material-ui/core/Paper";
-
-import Button from "@material-ui/core/Button";
-import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
-import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
-
+import {
+  Button
+  
+} from "reactstrap";
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const styles = theme => ({
@@ -75,40 +70,7 @@ class Activity extends React.Component {
             </React.Fragment>
           ))}
         </AutoPlaySwipeableViews>
-        <MobileStepper
-          steps={maxSteps}
-          position="static"
-          activeStep={activeStep}
-          className={classes.mobileStepper}
-          nextButton={
-            <Button
-              size="small"
-              onClick={this.handleNext}
-              disabled={activeStep === maxSteps - 1}
-            >
-              Next
-              {theme.direction === "rtl" ? (
-                <KeyboardArrowLeft />
-              ) : (
-                <KeyboardArrowRight />
-              )}
-            </Button>
-          }
-          backButton={
-            <Button
-              size="small"
-              onClick={this.handleBack}
-              disabled={activeStep === 0}
-            >
-              {theme.direction === "rtl" ? (
-                <KeyboardArrowRight />
-              ) : (
-                <KeyboardArrowLeft />
-              )}
-              Back
-            </Button>
-          }
-        />
+        
       </div>
     );
   }
@@ -124,8 +86,8 @@ Activity.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired
 };
-
-export default compose(
-  withStyles(styles, { withTheme: true }),
-  connect(mapStateToProps)
+export default connect(
+  mapStateToProps,
 )(Activity);
+
+

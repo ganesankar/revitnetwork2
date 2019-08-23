@@ -1,6 +1,9 @@
 export const FETCH_CITIES = "FETCH_CITIES";
 export const DELETE_CITY = "DELETE_CITY";
 
+export const FETCH_STUDENTS = "FETCH_STUDENTS";
+export const DELETE_STUDENT = "DELETE_STUDENT";
+
 export const FETCH_ACTIVITIES = "FETCH_ACTIVITIES";
 export const DELETE_ACTIVITY = "DELETE_ACTIVITY";
 

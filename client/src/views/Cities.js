@@ -6,10 +6,12 @@ import { fetchCities } from "../actions/citiesActions";
 import { getCurrentProfile } from "./../actions/profileActions";
 import { debounce } from "lodash";
 import Header from "../components/layout/Header";
+
+import {  Input} from 'reactstrap';
+
 // import Card from "@material-ui/core/Card";
 // import CardContent from "@material-ui/core/CardContent";
 // import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
 import ComplexCityButton from "./../components/layout/ComplexCityButton";
 
 class Cities extends Component {
@@ -48,7 +50,7 @@ class Cities extends Component {
       <div>
         <Header title={"Cities List"} />
         <div className="citysearchflex">
-          <TextField
+          <Input
             id="filled-with-placeholder"
             label="Search Destinations"
             type="text"

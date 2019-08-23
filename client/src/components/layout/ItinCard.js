@@ -17,20 +17,11 @@ import Activity from "./../Activity";
 import Comments from "./../Comments";
 
 import StarRatingComponent from "react-star-rating-component";
-
-import CardContent from "@material-ui/core/CardContent";
-import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
-import Icon from "@material-ui/core/Icon";
-import Fab from "@material-ui/core/Fab";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Snackbar from "@material-ui/core/Snackbar";
-import Fade from "@material-ui/core/Fade";
+import {
+  Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Form, FormGroup ,Card, CardImg, CardText, CardBody, CardLink,
+  CardTitle, Col ,Container,Toast, ToastBody, ToastHeader,
+  Row
+  } from "reactstrap";
 
 class ItinCard extends Component {
   constructor(props) {
@@ -134,82 +125,81 @@ class ItinCard extends Component {
 
     const addFavDialog = (
       <React.Fragment>
-        <Dialog
-          open={this.state.open}
-          onClose={this.dialogClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
+        <Modal 
+          isOpen={this.state.open}
+          toggle={this.dialogClose}
+          backdrop
         >
-          <DialogTitle id="alert-dialog-title">
+          <ModalHeader  id="alert-dialog-title">
             {"MYtinerary added to your Favorites"}
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
+          </ModalHeader>
+          <ModalBody>
+            <div id="alert-dialog-description">
               This itinerary has been added to your favorites. Go to Favorites
               page to view and manage your Itineraries.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
+            </div>
+          </ModalBody>
+          <ModalFooter>
             <Link to="/dashboard" className="gotoFav">
-              <Fab
-                className="confirmFabButton"
+              <Button
+                className="confirmButtonButton"
                 variant="extended"
                 size="small"
                 color="primary"
                 onClick={this.dialogClose}
               >
                 Go To Favorites
-              </Fab>
+              </Button>
             </Link>
             <Button onClick={this.dialogClose} color="inherit" autoFocus>
               Close
             </Button>
-          </DialogActions>
-        </Dialog>
+          </ModalFooter>
+        </Modal>
       </React.Fragment>
     );
 
     const removeFavDialog = (
       <React.Fragment>
-        <Dialog
+        <Modal
           open={this.state.open}
           onClose={this.dialogClose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">
+          <ModalHeader id="alert-dialog-title">
             {"Are you sure you want to delete MYtinerary from your Favorites?"}
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
+          </ModalHeader>
+          <ModalBody>
+            <div id="alert-dialog-description">
               Please confirm you want to delete this MYtinerary from your
               Favorites.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Fab
-              className="confirmFabButton"
+            </div>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              className="confirmButtonButton"
               variant="extended"
               size="small"
               color="primary"
               onClick={this.confirmButton.bind(this)}
             >
               Confirm
-            </Fab>
+            </Button>
             <Button onClick={this.dialogClose} color="inherit" autoFocus>
               Close
             </Button>
-          </DialogActions>
-        </Dialog>
+          </ModalFooter>
+        </Modal>
       </React.Fragment>
     );
 
     const unauthedIcons = (
       <React.Fragment>
         <div className="itinIconpanel">
-          <Fab variant="round" disabled>
-            <Icon fontSize="large">add_location</Icon>
-          </Fab>
+          <Button variant="round" disabled>
+            loca
+          </Button>
         </div>
       </React.Fragment>
     );
@@ -224,42 +214,42 @@ class ItinCard extends Component {
               {this.props.history === "/dashboard" ? (
                 <React.Fragment>
                   {/*  DASHBOARD PAGE CONDITION - FAV REMOVE*/}
-                  <Fab variant="round">
-                    <Icon
+                  <Button variant="round">
+                    <i
                       value={this.props.title}
                       variant="outlined"
                       fontSize="large"
                       onClick={this.handleOpen.bind(this, this.props._id)}
                     >
                       favorite_border
-                    </Icon>
+                    </i>
                     {removeFavDialog}
-                  </Fab>
+                  </Button>
                 </React.Fragment>
               ) : (
                 <React.Fragment>
                   {/*  DASHBOARD PAGE CONDITION - FAV SAVED*/}
-                  <Fab variant="round" disabled>
-                    <Icon value={this.props.title} fontSize="large">
+                  <Button variant="round" disabled>
+                    <i value={this.props.title} fontSize="large">
                       favorite
-                    </Icon>
-                  </Fab>
+                    </i>
+                  </Button>
                 </React.Fragment>
               )}
             </React.Fragment>
           ) : (
             <React.Fragment>
               {/*  ITIN PAGE CONDITION - ADD TO FAV*/}
-              <Fab variant="round">
-                <Icon
+              <Button variant="round">
+                <i
                   value={this.props.title}
                   fontSize="large"
                   onClick={this.addToFav.bind(this, this.props._id)}
                 >
                   add_location
-                </Icon>
+                </i>
                 {addFavDialog}
-              </Fab>
+              </Button>
             </React.Fragment>
           )}
         </div>
@@ -271,23 +261,25 @@ class ItinCard extends Component {
         <div className="itineraryCard">
           <Card raised>
             {/* CARD HEADER */}
-            <Grid container spacing={0}>
-              <Grid item xs={9} sm={6}>
+            <Container>
+            <Row container spacing={0}>
+              <Col item xs={9} sm={6}>
                 <div className="itinCardDiv">
                   <h2 className="itinCardTitleText">{this.props.title}</h2>
                   <div className="itinCardTitleBy">By: {this.props.author}</div>
                 </div>
-              </Grid>
+              </Col>
               {/* CARD ICONS => TERNARY : AUTHED : UNAUTHED */}
-              <Grid item xs={3} sm={6}>
+              <Col item xs={3} sm={6}>
                 {isAuthenticated ? authedIcons : unauthedIcons}
-              </Grid>
-            </Grid>
+              </Col>
+            </Row>
+            </Container>
 
             {/* CARD CONTENT */}
-            <CardContent>
-              <Grid container spacing={0}>
-                <Grid item xs={5} sm={6}>
+            <Container>
+              <Row  spacing={0}>
+                <Col item xs={5} sm={6}>
                   <div className="dashboardImgDiv">
                     <img
                       alt="profile"
@@ -295,23 +287,23 @@ class ItinCard extends Component {
                       className="dashboardImg"
                     />
                   </div>
-                </Grid>
-                <Grid item xs={7} sm={6}>
+                </Col>
+                <Col item xs={7} sm={6}>
                   {/* TIME */}
-                  <Grid item xs={10}>
+                  <Col item xs={10}>
                     <div>• Time: {this.props.duration} Hours</div>
-                  </Grid>
+                  </Col>
                   {/* COST */}
-                  <Grid item xs={10}>
+                  <Col item xs={10}>
                     <div>• Cost: {this.props.price}</div>
-                  </Grid>
+                  </Col>
                   {/* LIKES */}
-                  <Grid item xs={10}>
+                  <Col item xs={10}>
                     <div>• Likes: {this.props.likes} </div>
-                  </Grid>
+                  </Col>
 
                   {/* RATINGS */}
-                  <Grid item xs={10}>
+                  <Col item xs={10}>
                     <div className="starRatingComponentDiv">
                       • Rating:
                       <StarRatingComponent
@@ -322,9 +314,9 @@ class ItinCard extends Component {
                         editing={false}
                       />
                     </div>
-                  </Grid>
+                  </Col>
                   {/* HASHTAGS */}
-                  <Grid item xs={12}>
+                  <Col item xs={12}>
                     <div>
                       • Hashtags:{" "}
                       {this.props.hashtag.map(item => {
@@ -347,10 +339,9 @@ class ItinCard extends Component {
                         );
                       })}
                     </div>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </CardContent>
+                  </Col> </Col>
+                </Row>
+              </Container>
 
             {/* {BUTTON} */}
             {this.state.eventId === this.props.activitykey ? (
@@ -388,17 +379,16 @@ class ItinCard extends Component {
             {/* END OF CARD */}
           </Card>
         </div>
-        <Snackbar
-          open={this.state.snackbar}
-          onClose={this.snackbarClose}
+        <Toast 
+          isOpen={this.state.snackbar}
+          toggle={this.snackbarClose}
           autoHideDuration={2500}
           variant="success"
-          TransitionComponent={Fade}
-          ContentProps={{
-            "aria-describedby": "message-id"
-          }}
-          message={<div className="snackbartext">Favorite Removed!</div>}
-        />
+          >
+          <ToastHeader toggle={this.toggle}>Favorite Removed</ToastHeader>
+          <ToastBody>
+           </ToastBody>
+        </Toast>
       </React.Fragment>
     );
   }

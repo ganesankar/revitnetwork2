@@ -4,12 +4,14 @@ import { connect } from "react-redux";
 import { debounce } from "lodash";
 import { fetchCities } from "../actions/citiesActions";
 import { editCity, deleteCity } from "../actions/cmsActions";
-
+import {
+  Button,
+ Card,
+  Input,Media , Form, FormGroup, Label, FormText 
+  
+} from "reactstrap";
 import Header from "../components/layout/Header";
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import TextField from "@material-ui/core/TextField";
-import Icon from "@material-ui/core/Icon";
+
 
 class Editcity extends Component {
   constructor(props) {
@@ -137,7 +139,7 @@ class Editcity extends Component {
       <React.Fragment>
         <div className="deleteButton">
           <Button onClick={this.onDelete} variant="outlined" color="secondary">
-            Delete City <Icon>delete</Icon>
+            Delete City 
           </Button>
           <br />
         </div>
@@ -159,7 +161,7 @@ class Editcity extends Component {
               onSubmit={this.onSubmit}
             >
               <div>
-                <TextField
+                <Input 
                   className="commentFormInput"
                   id="outlined-with-placeholder"
                   label="Please enter City Name:"
@@ -176,7 +178,7 @@ class Editcity extends Component {
                 *Warning : Changing City Name can affect linked Itinerary
               </p> */}
               <div>
-                <TextField
+                <Input 
                   className="commentFormInput"
                   id="outlined-with-placeholder"
                   label="Please enter City Country:"
@@ -204,7 +206,7 @@ class Editcity extends Component {
                     color="primary"
                     onClick={this.onSubmit}
                   >
-                    Update City!<Icon>save</Icon>
+                    Update City!
                   </Button>
                 </div>
                 <div>{deleteButton}</div>
@@ -218,7 +220,7 @@ class Editcity extends Component {
                     color="primary"
                     onClick={this.onSubmit}
                   >
-                    Update City!<Icon>save</Icon>
+                    Update City!
                   </Button>
                   <div>
                     <p className="cmsimagerequired">
@@ -265,7 +267,7 @@ class Editcity extends Component {
           <p>Edit a City from the list below :</p>
         </div>
         <div className="citysearchflex">
-          <TextField
+          <Input 
             id="filled-with-placeholder"
             label="Search Destinations"
             type="text"

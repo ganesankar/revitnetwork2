@@ -2,15 +2,14 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { logoutUser } from "../actions/authActions";
 import { connect } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserGraduate, faChalkboardTeacher, faCalendar, faLink} from '@fortawesome/free-solid-svg-icons';
 import {
   Button,
   Card,
   CardHeader,
   CardBody,
   CardFooter,
-  CardTitle,
-  ListGroupItem,
-  ListGroup,
   Container,
   Row,
   Col
@@ -20,9 +19,46 @@ import { getCurrentProfile } from "../actions/profileActions";
 
 import { Spring } from "react-spring/renderprops";
 
-import CustomButton from "./../components/layout/CustomButton";
-
 class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      homeUserMenu: [
+        {
+          id: 1,
+          name: "Students",
+          icon: faUserGraduate,
+          url: "/students",
+          color: "primary",
+          desc: ""
+        },
+        {
+          id: 2,
+          name: "Staffs",
+          icon: faChalkboardTeacher,
+          url: "/staffs",
+          color: "success",
+          desc: ""
+        },
+        {
+          id: 3,
+          name: "Events",
+          icon: faCalendar,
+          url: "/calendar",
+          color: "info",
+          desc: ""
+        },
+        {
+          id: 4,
+          name: "Others",
+          icon: faLink,
+          url: "/others",
+          color: "warning",
+          desc: ""
+        }
+      ]
+    };
+  }
   componentDidMount() {
     if (this.props.auth.isAuthenticated === true) {
       this.props.getCurrentProfile();
@@ -37,158 +73,87 @@ class Home extends Component {
 
     const loginState = (
       <React.Fragment>
-        
         <Container>
-              <Row>
-                <Col md="3">
-                  <Card className="card-coin card-plain">
-                    <CardHeader>
-                      
-                    </CardHeader>
-                    <CardBody>
-                      <Row>
-                        <Col className="text-center" md="12">
-                          <h4 className="text-uppercase">STUDENTS</h4>
-                          <hr className="line-primary" />
-                        </Col>
-                      </Row>
-                    </CardBody>
-                    <CardFooter className="text-center">
-                    <NavLink to="/dashboard">
-                    <Button className="btn-simple" color="primary">
+          <Row>
+            {this.state.homeUserMenu.map(menu => (
+              <Col md="3">
+                <Card className="card">
+                  <CardHeader>
+                  <FontAwesomeIcon icon={menu.icon} size="4x" className={`text-${menu.color}`}/>
+                  </CardHeader>
+                  <CardBody>
+                    <Row>
+                      <Col className="text-center" md="12">
+                        <h4 className="text-uppercase">{menu.name}</h4>
+                        <hr className="line-primary" />
+                      </Col>
+                    </Row>
+                  </CardBody>
+                  <CardFooter className="text-center">
+                    <NavLink to={menu.url}>
+                      <Button className="btn-simple" color={menu.color}>
                         VIEW ALL
                       </Button>
-              </NavLink>
-                      
-                    </CardFooter>
-                  </Card>
-                </Col>
-                <Col md="3">
-                  <Card className="card-coin card-plain">
-                    <CardHeader>
-                    
-                    </CardHeader>
-                    <CardBody>
-                      <Row>
-                        <Col className="text-center" md="12">
-                          <h4 className="text-uppercase">STAFFS</h4>
-                          <hr className="line-success" />
-                        </Col>
-                      </Row>
-                    </CardBody>
-                    <CardFooter className="text-center">
-                    <NavLink to="/staffs">
-                    <Button className="btn-simple" color="success">
-                        VIEW ALL
-                      </Button>
-              </NavLink>
-                      
-                    </CardFooter>
-                  </Card>
-                </Col>
-                <Col md="3">
-                  <Card className="card-coin card-plain">
-                    <CardHeader>
-                     
-                    </CardHeader>
-                    <CardBody>
-                      <Row>
-                        <Col className="text-center" md="12">
-                          <h4 className="text-uppercase">EVENTS </h4>
-                          <hr className="line-info" />
-                        </Col>
-                      </Row>
-                    </CardBody>
-                    <CardFooter className="text-center">
-                    <NavLink to="/events">
-                      <Button className="btn-simple" color="info">
-                        VIEW ALL
-                      </Button>   </NavLink>
-                    </CardFooter>
-                  </Card>
-                </Col>
-                <Col md="3">
-                  <Card className="card-coin card-plain">
-                    <CardHeader>
-                     
-                    </CardHeader>
-                    <CardBody>
-                      <Row>
-                        <Col className="text-center" md="12">
-                          <h4 className="text-uppercase">EVENTS </h4>
-                          <hr className="line-info" />
-                        </Col>
-                      </Row>
-                    </CardBody>
-                    <CardFooter className="text-center">
-                    <NavLink to="/links">
-                      <Button className="btn-simple" color="warning">
-                        VIEW ALL
-                      </Button>   </NavLink>
-                    </CardFooter>
-                  </Card>
-                </Col>
-              </Row>
-            </Container>
-       
+                    </NavLink>
+                  </CardFooter>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        </Container>
       </React.Fragment>
     );
     const logoutState = (
       <React.Fragment>
-        
         <Container>
-              <Row>
-                <Col md="4">
-                  <Card className="card-coin card-plain">
-                    <CardHeader>
-                    <img
-              className="img-center img-fluid"
-              alt=""
-              src={require("../images/revit.png")} />
-                    </CardHeader>
-                    <CardBody>
-                      <Row>
-                        <Col className="text-center" md="12">
-                          <h4 className="text-uppercase">WELCOME BUDDY</h4>
-                          <hr className="line-primary" />
-                        </Col>
-                      </Row>
-                    </CardBody>
-                    <CardFooter className="text-center">
-                    <NavLink to="/login">
-                      <Button className="btn-simple" color="info">
-                        LOGIN
-                      </Button>   </NavLink>
-                    </CardFooter>
-                  </Card>
-                </Col>
-              </Row>
-            </Container>
-        
+          <Row>
+            <Col md="4">
+              <Card className="card-coin card-plain">
+                <CardHeader>
+                  <img
+                    className="img-center img-fluid"
+                    alt=""
+                    src={require("../images/revit.png")}
+                  />
+                </CardHeader>
+                <CardBody>
+                  <Row>
+                    <Col className="text-center" md="12">
+                      <h4 className="text-uppercase">WELCOME BUDDY</h4>
+                      <hr className="line-primary" />
+                    </Col>
+                  </Row>
+                </CardBody>
+                <CardFooter className="text-center">
+                  <NavLink to="/login">
+                    <Button className="btn-simple" color="info">
+                      LOGIN
+                    </Button>{" "}
+                  </NavLink>
+                </CardFooter>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
       </React.Fragment>
     );
 
     const homepageBody = (
       <div>
         <div>
-         
-          
-
-        <div className="page-header">
-        <Container>
-          <div className="text-center brand">
-            <h1 className="h1-seo"> REVIT 08</h1>
-            <h3 className="d-none d-sm-block">
-              JJCET 2008 IT BATCH STUDENTS COMMUNITY
-            </h3>
-            {isAuthenticated ? loginState : logoutState}
+          <div className="page-header ">
+            <Container>
+              <div className="text-center brand">
+                <h1 className="h1-seo"> REVIT 08</h1>
+                <h3 className="d-none d-sm-block">
+                  JJCET 2008 IT BATCH STUDENTS COMMUNITY
+                </h3>
+                {isAuthenticated ? loginState : logoutState}
+              </div>
+            </Container>
           </div>
-        </Container>
-        
-      </div>
 
           {/* TERNERY AUTH LOGIC */}
-          
         </div>
       </div>
     );

@@ -7,15 +7,8 @@ import { Link } from "react-router-dom";
 
 import Header from "../components/layout/Header";
 
-import Card from "@material-ui/core/Card";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
-import FilledInput from "@material-ui/core/FilledInput";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Icon from "@material-ui/core/Icon";
+import { Button, Form, FormGroup, Label, Input, FormText, Card , Modal, ModalHeader, ModalBody, ModalFooter,} from 'reactstrap';
+
 
 class Cmsactivity extends Component {
   constructor() {
@@ -27,7 +20,7 @@ class Cmsactivity extends Component {
       image: null,
       activitykey: "",
       authorid: "",
-      selectedFile: null,
+      InputedFile: null,
       previewFile: null
     };
     // this.onChange = this.onChange.bind(this);
@@ -71,7 +64,7 @@ class Cmsactivity extends Component {
       title: "",
       activitykey: "",
       image: null,
-      selectedFile: null,
+      InputedFile: null,
       previewFile: null
     });
   };
@@ -102,36 +95,35 @@ class Cmsactivity extends Component {
       </React.Fragment>
     );
 
-    const selectActivity = (
+    const InputActivity = (
       <React.Fragment>
-        <FormControl variant="filled">
-          <InputLabel htmlFor="filled-itin-simple">
-            Select Itinerary:
-          </InputLabel>
-          <Select
-            className="selectForms"
+        <FormGroup variant="filled">
+          <Label  htmlFor="filled-itin-simple">
+            Input Itinerary:
+          </Label >
+          <Input
+            className="InputForms"
             value={this.state.activitykey}
             onChange={this.onChange}
-            type="select"
+            type="Input"
             name="activitykey"
-            input={<FilledInput name="activitykey" id="filled-itin-simple" />}
           >
-            <MenuItem value="">
+            <option value="">
               <em>None</em>
-            </MenuItem>
+            </option>
             {this.props.itineraries.itineraries.map(itin => {
               let cityName = itin.cityurl
                 .split("_")
                 .map(s => s.charAt(0).toUpperCase() + s.substring(1))
                 .join(" ");
               return (
-                <MenuItem key={itin._id} value={itin.activitykey}>
+                <option key={itin._id} value={itin.activitykey}>
                   {itin.title} - {cityName}
-                </MenuItem>
+                </option>
               );
             })}
-          </Select>
-        </FormControl>
+          </Input>
+        </FormGroup>
       </React.Fragment>
     );
 
@@ -145,7 +137,7 @@ class Cmsactivity extends Component {
               onSubmit={this.onSubmit}
             >
               <div>
-                <TextField
+                <Input 
                   className="commentFormInput"
                   id="outlined-with-placeholder"
                   label="Please enter Activity Title:"
@@ -162,7 +154,7 @@ class Cmsactivity extends Component {
               {errors.title && (
                 <div className="invalid-feedback">{errors.title}</div>
               )}
-              {selectActivity}
+              {InputActivity}
             </form>
             <div className="cmsUploadimage">
               Upload Activity Image.
@@ -176,7 +168,7 @@ class Cmsactivity extends Component {
               <React.Fragment>
                 <div className="cmsAction">
                   <Button variant="outlined" color="primary" disabled>
-                    Create Activity!<Icon>save</Icon>
+                    Create Activity!
                   </Button>
                 </div>
                 <div>
@@ -194,7 +186,7 @@ class Cmsactivity extends Component {
                     onClick={this.onSubmit}
                     value="Submit"
                   >
-                    Create Activity!<Icon>save</Icon>
+                    Create Activity!
                   </Button>
                 </div>
               </React.Fragment>

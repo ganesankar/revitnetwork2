@@ -3,20 +3,20 @@ import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
 import { debounce } from "lodash";
+
+import {
+  Button,
+ Card,
+  Input,Media , Form, FormGroup, Label, FormText
+  
+} from "reactstrap";
+
+import Header from "../components/layout/Header";
 import { fetchActivities } from "../actions/activitiesActions";
 import { fetchItineraries } from "../actions/itinerariesActions";
 import { editActivity, deleteActivity } from "../actions/cmsActions";
 
-import Header from "../components/layout/Header";
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import TextField from "@material-ui/core/TextField";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
-import FilledInput from "@material-ui/core/FilledInput";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Icon from "@material-ui/core/Icon";
+
 
 class EditActivity extends Component {
   constructor(props) {
@@ -132,7 +132,7 @@ class EditActivity extends Component {
       <React.Fragment>
         <div className="deleteButton">
           <Button onClick={this.onDelete} variant="outlined" color="secondary">
-            Delete Activity <Icon>delete</Icon>
+            Delete Activity 
           </Button>
         </div>
       </React.Fragment>
@@ -144,34 +144,12 @@ class EditActivity extends Component {
     );
     const selectItinerary = (
       <React.Fragment>
-        <FormControl variant="filled">
-          <InputLabel htmlFor="filled-itin-simple">
+        <FormGroup variant="filled">
+          <Label  htmlFor="filled-itin-simple">
             Select Itinerary:
-          </InputLabel>
-          <Select
-            className="selectForms"
-            value={this.state.activitykey}
-            onChange={this.onChange}
-            type="select"
-            name="activitykey"
-            input={<FilledInput name="activitykey" id="filled-itin-simple" />}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            {this.props.itineraries.itineraries.map(itin => {
-              let cityName = itin.cityurl
-                .split("_")
-                .map(s => s.charAt(0).toUpperCase() + s.substring(1))
-                .join(" ");
-              return (
-                <MenuItem key={itin._id} value={itin.activitykey}>
-                  {itin.title} - {cityName}
-                </MenuItem>
-              );
-            })}
-          </Select>
-        </FormControl>
+          </Label >
+          
+        </FormGroup>
       </React.Fragment>
     );
     const cmsbody = (
@@ -184,7 +162,7 @@ class EditActivity extends Component {
               onSubmit={this.onSubmit}
             >
               <div>
-                <TextField
+                <Input 
                   className="commentFormInput"
                   id="outlined-with-placeholder"
                   label="Please enter Activity Title:"
@@ -213,7 +191,7 @@ class EditActivity extends Component {
                     color="primary"
                     onClick={this.onSubmit}
                   >
-                    Update Activity!<Icon>save</Icon>
+                    Update Activity!
                   </Button>
                 </div>
                 <div>{deleteButton}</div>
@@ -227,7 +205,7 @@ class EditActivity extends Component {
                     color="primary"
                     onClick={this.onSubmit}
                   >
-                    Update Activity!<Icon>save</Icon>
+                    Update Activity!
                   </Button>
                   <div>
                     <p className="cmsimagerequired">
@@ -276,7 +254,7 @@ class EditActivity extends Component {
           <p>Edit an Activity from the list below :</p>
         </div>
         <div className="citysearchflex">
-          <TextField
+          <Input 
             id="filled-with-placeholder"
             label="Search Activities"
             type="text"

@@ -1,12 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import IconHome from "./IconHome";
-import IconBackbutton from "./IconBackbutton";
-import IconCity from "./IconCity";
-import IconDashboard from "./IconDashboard";
-import Toolbar from "@material-ui/core/Toolbar";
+import { Link } from "react-router-dom";
+import {
+  
+  NavItem,
+  NavLink,
+  Nav,
+  Container,
+  Row,
+  Col,
+  
+} from "reactstrap";
+
 
 const styles = theme => ({
   text: {
@@ -46,23 +51,37 @@ function BottomAppBar(props) {
 
   return (
     <React.Fragment>
-      <div className="bottomNav" />
-      <AppBar position="fixed" color="default" className={classes.appBar}>
-        <Toolbar className="toolBarFlex">
-          <div>
-            <IconBackbutton />
-          </div>
-          <div>
-            <IconHome />
-          </div>
-          <div>
-            <IconDashboard />
-          </div>
-          <div>
-            <IconCity />
-          </div>
-        </Toolbar>
-      </AppBar>
+       <footer className="footer">
+        <Container>
+          <Row>
+            <Col md="12">
+            <Nav>
+                <NavItem>
+                  <NavLink to="/" tag={Link}>
+                    Home
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink to="/landing-page" tag={Link}>
+                    Landing
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink to="/register-page" tag={Link}>
+                    Register
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink to="/profile-page" tag={Link}>
+                    Profile
+                  </NavLink>
+                </NavItem>
+              </Nav>
+            </Col>
+            
+          </Row>
+        </Container>
+      </footer>
     </React.Fragment>
   );
 }
@@ -71,4 +90,4 @@ BottomAppBar.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(BottomAppBar);
+export default BottomAppBar;

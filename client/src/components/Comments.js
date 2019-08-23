@@ -4,13 +4,17 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import moment from "moment";
 import {
+  Button,
+  Container,
+  Row,
+  Col,Input,Media 
+  
+} from "reactstrap";
+import {
   fetchAxiosComments,
   postAxiosComments
 } from "../actions/commentActions";
 
-import TextField from "@material-ui/core/TextField";
-import Avatar from "@material-ui/core/Avatar";
-import Grid from "@material-ui/core/Grid";
 
 class Comments extends Component {
   componentDidMount() {}
@@ -88,17 +92,15 @@ class Comments extends Component {
     //COMMENT LIST
     const commentList = this.props.comments.comments.map(comment => (
       <div className="comments" key={comment._id + comment.user}>
-        <Grid container spacing={0} direction="row">
-          <Grid item xs={2} sm={6}>
+        <Container >
+          <Row>
+          <Col  xs={2} sm={6}>
             <div className="commentAvatar">
-              <Avatar
-                alt={comment.name}
-                src={comment.avatar}
-                title="Gravatar and Image Files supported."
-              />
+              
+              <Media object data-src={comment.avatar}   alt={comment.name} title="Gravatar and Image Files supported." />
             </div>
-          </Grid>
-          <Grid item xs={10} sm={6}>
+          </Col>
+          <Col item xs={10} sm={6}>
             <div className="commentUsername">
               <span className="commentUser">{comment.user}</span>
               <span className="commentTimestamp">
@@ -107,8 +109,9 @@ class Comments extends Component {
               </span>
             </div>
             <div className="commentContent">• {comment.message}</div>
-          </Grid>
-        </Grid>
+          </Col>
+          </Row>
+        </Container>
       </div>
     ));
 
@@ -119,7 +122,7 @@ class Comments extends Component {
           <form onSubmit={this.onSubmit}>
             <div className="chatUserName">Guest</div>
 
-            <TextField
+            <Input 
               disabled
               className="commentFormInput"
               id="outlined-with-placeholder"
@@ -138,13 +141,13 @@ class Comments extends Component {
             )}
 
             <Link to="/login">
-              <button
+              <Button
                 className="loginButtonDisabled"
                 type="submit"
                 value="Submit"
               >
                 Please Login to Comment
-              </button>
+              </Button>
             </Link>
           </form>
         </div>
@@ -157,7 +160,7 @@ class Comments extends Component {
           <form onSubmit={this.onSubmitLoggedIn}>
             <div className="chatUserName">{this.props.auth.user.username}</div>
 
-            <TextField
+            <Input
               className="commentFormInput"
               id="outlined-with-placeholder"
               label="Leave a Comment:"

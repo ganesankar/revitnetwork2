@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-// reactstrap components
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   Button,
   Collapse,
@@ -11,15 +12,13 @@ import {
   Nav,
   Container,
   Row,
-  Col
+  Col,
+  Media
 } from "reactstrap";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import { Link } from "react-router-dom";
 
-import Icon from "@material-ui/core/Icon";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import Avatar from "@material-ui/core/Avatar";
 
 class MenuAppBar extends React.Component {
   
@@ -149,11 +148,9 @@ class MenuAppBar extends React.Component {
       <div>
         <div>
           <NavLink to="/">
-            <Avatar
-              alt={user.name}
-              src={user.avatar}
-              title="Gravatar and Image Files supported."
-            />
+          <Media object data-src={user.avatar}   alt={user.name} title="Gravatar and Image Files supported." />
+           
+            
           </NavLink>
         </div>
       </div>
@@ -161,7 +158,9 @@ class MenuAppBar extends React.Component {
     const guestLinks = (
       <div>
         <Link className="nav-link" to="/login">
-          <AccountCircle className="IconaAccountCircle" fontSize="large" />
+          
+        <FontAwesomeIcon icon="user-circle" />
+         
         </Link>
       </div>
     );
@@ -226,30 +225,7 @@ class MenuAppBar extends React.Component {
               </Row>
             </div>
             <Nav navbar>
-              <NavItem className="p-0">
-                <NavLink
-                  data-placement="bottom"
-                  href="https://twitter.com/CreativeTim"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  title="Follow us on Twitter"
-                >
-                  <i className="fab fa-twitter" />
-                  <p className="d-lg-none d-xl-none">Twitter</p>
-                </NavLink>
-              </NavItem>
-              <NavItem className="p-0">
-                <NavLink
-                  data-placement="bottom"
-                  href="https://www.facebook.com/CreativeTim"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  title="Like us on Facebook"
-                >
-                  <i className="fab fa-facebook-square" />
-                  <p className="d-lg-none d-xl-none">Facebook</p>
-                </NavLink>
-              </NavItem>
+              
               {sideList}
               
               

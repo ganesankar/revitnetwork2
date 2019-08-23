@@ -6,16 +6,9 @@ import { fetchCities } from "../actions/citiesActions";
 import { Link } from "react-router-dom";
 
 import Header from "../components/layout/Header";
+import { Button, Form, FormGroup, Label, Input, FormText, Card , Modal, ModalHeader, ModalBody, ModalFooter,} from 'reactstrap';
 
-import Card from "@material-ui/core/Card";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
-import FilledInput from "@material-ui/core/FilledInput";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Icon from "@material-ui/core/Icon";
+
 
 class Cmsitin extends Component {
   constructor() {
@@ -120,86 +113,82 @@ class Cmsitin extends Component {
         </div>
       </React.Fragment>
     );
-    const selectCity = (
+    const InputCity = (
       <React.Fragment>
-        <FormControl variant="filled">
-          <InputLabel htmlFor="filled-city-simple">Select City :</InputLabel>
-          <Select
-            className="selectForms"
+        <FormGroup variant="filled">
+          <Label  htmlFor="filled-city-simple">Input City :</Label >
+          <Input type="Input"
+            className="InputForms"
             value={this.state.cityurl}
             onChange={this.onChange}
-            type="select"
             name="cityurl"
             errorform={errors.cityurl}
-            input={<FilledInput name="cityurl" id="filled-city-simple" />}
           >
-            <MenuItem value="">
+            <option value="">
               <em>None</em>
-            </MenuItem>
+            </option>
             {this.props.cities.cities.map(city => {
               return (
-                <MenuItem key={city._id} value={city.url}>
+                <option key={city._id} value={city.url}>
                   {city.cityname}
-                </MenuItem>
+                </option>
               );
             })}
-          </Select>
+          </Input>
           {errors.cityurl && (
             <div className="invalid-feedback">{errors.cityurl}</div>
           )}
-        </FormControl>
+        </FormGroup>
       </React.Fragment>
     );
-    const selectPrice = (
+    const InputPrice = (
       <React.Fragment>
-        <FormControl variant="filled">
-          <InputLabel htmlFor="filled-price-simple">
-            Select Price Range:
-          </InputLabel>
-          <Select
-            className="selectForms"
+        <FormGroup variant="filled">
+          <Label  htmlFor="filled-price-simple">
+            Input Price Range:
+          </Label >
+          <Input
+            className="InputForms"
             value={this.state.price}
             onChange={this.onChange}
-            type="select"
+            type="Input"
             name="price"
             errorform={errors.price}
-            input={<FilledInput name="price" id="filled-price-simple" />}
           >
-            <MenuItem value="">
+            <option value="">
               <em>None</em>
-            </MenuItem>
-            <MenuItem value={"$"}>$</MenuItem>
-            <MenuItem value={"$$"}>$$</MenuItem>
-            <MenuItem value={"$$$"}>$$$</MenuItem>
-          </Select>
-        </FormControl>
+            </option>
+            <option value={"$"}>$</option>
+            <option value={"$$"}>$$</option>
+            <option value={"$$$"}>$$$</option>
+          </Input>
+        </FormGroup>
       </React.Fragment>
     );
-    const selectRating = (
+    const InputRating = (
       <React.Fragment>
-        <FormControl variant="filled">
-          <InputLabel htmlFor="filled-rating-simple">
-            Select Rating out of 5:
-          </InputLabel>
-          <Select
-            className="selectForms"
+        <FormGroup variant="filled">
+          <Label  htmlFor="filled-rating-simple">
+            Input Rating out of 5:
+          </Label >
+          <Input
+            className="InputForms"
             value={this.state.rating}
             onChange={this.onChange}
-            type="select"
+            type="Input"
             name="rating"
             errorform={errors.rating}
-            input={<FilledInput name="rating" id="filled-rating-simple" />}
           >
-            <MenuItem value="">
+            <option value="">
               <em>None</em>
-            </MenuItem>
-            <MenuItem value={1}>*</MenuItem>
-            <MenuItem value={2}>**</MenuItem>
-            <MenuItem value={3}>***</MenuItem>
-            <MenuItem value={4}>****</MenuItem>
-            <MenuItem value={5}>*****</MenuItem>
-          </Select>
-        </FormControl>
+            </option>
+            <option value={1}>*</option>
+            <option value={2}>**</option>
+            <option value={3}>***</option>
+            <option value={4}>****</option>
+            <option value={5}>*****</option>
+          </Input>
+        </FormGroup>
       </React.Fragment>
     );
 
@@ -209,7 +198,7 @@ class Cmsitin extends Component {
           <Card raised className="commentForm">
             <form encType="multipart/form-data" onSubmit={this.onSubmit}>
               <div>
-                <TextField
+                <Input 
                   className="commentFormInput"
                   id="outlined-with-placeholder"
                   label="Please enter Itinerary Title:"
@@ -226,9 +215,9 @@ class Cmsitin extends Component {
               {errors.title && (
                 <div className="invalid-feedback">{errors.title}</div>
               )}
-              <div> {selectCity}</div>
+              <div> {InputCity}</div>
               <div>
-                <TextField
+                <Input 
                   className="commentFormInput"
                   id="outlined-with-placeholder"
                   label="Please enter number of Likes:"
@@ -243,7 +232,7 @@ class Cmsitin extends Component {
                 />
               </div>
               <div>
-                <TextField
+                <Input 
                   className="commentFormInput"
                   id="outlined-with-placeholder"
                   label="Please enter number of Hours:"
@@ -257,10 +246,10 @@ class Cmsitin extends Component {
                   errorform={errors.duration}
                 />
               </div>
-              <div>{selectRating}</div>
-              <div>{selectPrice}</div>
+              <div>{InputRating}</div>
+              <div>{InputPrice}</div>
               <div>
-                <TextField
+                <Input 
                   className="commentFormInput"
                   id="outlined-with-placeholder"
                   label="Please enter Hashtags:"
@@ -286,7 +275,7 @@ class Cmsitin extends Component {
               <React.Fragment>
                 <div className="cmsAction">
                   <Button variant="outlined" color="primary" disabled>
-                    Create Itinerary!<Icon>save</Icon>
+                    Create Itinerary!
                   </Button>
                 </div>
                 <div>
@@ -304,7 +293,7 @@ class Cmsitin extends Component {
                     onClick={this.onSubmit}
                     value="Submit"
                   >
-                    Create Itinerary!<Icon>save</Icon>
+                    Create Itinerary!
                   </Button>
                 </div>
               </React.Fragment>

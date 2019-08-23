@@ -6,17 +6,13 @@ import { debounce } from "lodash";
 import { fetchItineraries } from "../actions/itinerariesActions";
 import { fetchCities } from "../actions/citiesActions";
 import { editItinerary, deleteItinerary } from "../actions/cmsActions";
-
+import {
+  Button,
+ Card,
+  Input,Media , Form, FormGroup, Label, FormText
+  
+} from "reactstrap";
 import Header from "../components/layout/Header";
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import Icon from "@material-ui/core/Icon";
-import TextField from "@material-ui/core/TextField";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
-import FilledInput from "@material-ui/core/FilledInput";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
 
 class EditItinerary extends Component {
   constructor(props) {
@@ -165,7 +161,7 @@ class EditItinerary extends Component {
       <React.Fragment>
         <div className="deleteButton">
           <Button onClick={this.onDelete} variant="outlined" color="secondary">
-            Delete Itinerary <Icon>delete</Icon>
+            Delete Itinerary 
           </Button>
         </div>
       </React.Fragment>
@@ -177,78 +173,30 @@ class EditItinerary extends Component {
     );
     const selectCity = (
       <React.Fragment>
-        <FormControl variant="filled">
-          <InputLabel htmlFor="filled-city-simple">Select City:</InputLabel>
-          <Select
-            className="selectForms"
-            value={this.state.cityurl}
-            onChange={this.onChange}
-            type="select"
-            name="cityurl"
-            input={<FilledInput name="cityurl" id="filled-city-simple" />}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            {this.props.cities.cities.map(city => {
-              return (
-                <MenuItem key={city._id} value={city.url}>
-                  {city.cityname}
-                </MenuItem>
-              );
-            })}
-          </Select>
-        </FormControl>
+        <FormGroup  variant="filled">
+          <Label htmlFor="filled-city-simple">Select City:</Label>
+          
+        </FormGroup >
       </React.Fragment>
     );
     const selectPrice = (
       <React.Fragment>
-        <FormControl variant="filled">
-          <InputLabel htmlFor="filled-price-simple">
+        <FormGroup  variant="filled">
+          <Label htmlFor="filled-price-simple">
             Select Price Range:
-          </InputLabel>
-          <Select
-            className="selectForms"
-            value={this.state.price}
-            onChange={this.onChange}
-            type="select"
-            name="price"
-            input={<FilledInput name="price" id="filled-price-simple" />}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={"$"}>$</MenuItem>
-            <MenuItem value={"$$"}>$$</MenuItem>
-            <MenuItem value={"$$$"}>$$$</MenuItem>
-          </Select>
-        </FormControl>
+          </Label>
+          
+        </FormGroup >
       </React.Fragment>
     );
     const selectRating = (
       <React.Fragment>
-        <FormControl variant="filled">
-          <InputLabel htmlFor="filled-rating-simple">
+        <FormGroup  variant="filled">
+          <Label htmlFor="filled-rating-simple">
             Select Rating out of 5:
-          </InputLabel>
-          <Select
-            className="selectForms"
-            value={this.state.rating}
-            onChange={this.onChange}
-            type="select"
-            name="rating"
-            input={<FilledInput name="rating" id="filled-rating-simple" />}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={1}>*</MenuItem>
-            <MenuItem value={2}>**</MenuItem>
-            <MenuItem value={3}>***</MenuItem>
-            <MenuItem value={4}>****</MenuItem>
-            <MenuItem value={5}>*****</MenuItem>
-          </Select>
-        </FormControl>
+          </Label>
+          
+        </FormGroup >
       </React.Fragment>
     );
 
@@ -262,7 +210,7 @@ class EditItinerary extends Component {
               onSubmit={this.onSubmit}
             >
               <div>
-                <TextField
+                <Input 
                   className="commentFormInput"
                   id="outlined-with-placeholder"
                   label="Please enter Itinerary Title:"
@@ -280,7 +228,7 @@ class EditItinerary extends Component {
               </p>
               <div> {selectCity}</div>
               <div>
-                <TextField
+                <Input 
                   className="commentFormInput"
                   id="outlined-with-placeholder"
                   label="Please enter number of Likes:"
@@ -295,7 +243,7 @@ class EditItinerary extends Component {
               </div>
 
               <div>
-                <TextField
+                <Input 
                   className="commentFormInput"
                   id="outlined-with-placeholder"
                   label="Please enter number of Hours:"
@@ -311,7 +259,7 @@ class EditItinerary extends Component {
               <div>{selectRating}</div>
               <div>{selectPrice}</div>
               <div>
-                <TextField
+                <Input 
                   className="commentFormInput"
                   id="outlined-with-placeholder"
                   label="Please enter Hashtags:"
@@ -335,7 +283,7 @@ class EditItinerary extends Component {
                     color="primary"
                     onClick={this.onSubmit}
                   >
-                    Update Itinerary!<Icon>save</Icon>
+                    Update Itinerary!
                   </Button>
                 </div>
                 <div>{deleteButton}</div>
@@ -349,7 +297,7 @@ class EditItinerary extends Component {
                     color="primary"
                     onClick={this.onSubmit}
                   >
-                    Update Itinerary!<Icon>save</Icon>
+                    Update Itinerary!
                   </Button>
                   <div>
                     <p className="cmsimagerequired">
@@ -380,7 +328,7 @@ class EditItinerary extends Component {
           <p>Edit an Itinerary from the list below :</p>
         </div>
         <div className="citysearchflex">
-          <TextField
+          <Input 
             id="filled-with-placeholder"
             label="Search Itineraries"
             type="text"

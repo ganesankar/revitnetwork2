@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
 // import { Link } from "react-router-dom";
-import ButtonBase from "@material-ui/core/ButtonBase";
-import Typography from "@material-ui/core/Typography";
 
 const styles = theme => ({
   root: {
@@ -97,7 +94,7 @@ class ButtonBases extends Component {
 
     return (
       <div className={classes.root}>
-        <ButtonBase
+        <div
           focusRipple
           key={this.props.city}
           className={classes.image}
@@ -115,7 +112,7 @@ class ButtonBases extends Component {
           />
           <span className={classes.imageBackdrop} />
           <span className={classes.imageButton}>
-            <Typography
+            <div
               component="span"
               variant="subtitle1"
               color="inherit"
@@ -123,10 +120,10 @@ class ButtonBases extends Component {
             >
               {this.props.city}
               <span className={classes.imageMarked} />
-            </Typography>
+            </div>
           </span>
           {/* </Link> */}
-        </ButtonBase>
+        </div>
       </div>
     );
   }
@@ -135,4 +132,4 @@ ButtonBases.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(ButtonBases);
+export default ButtonBases;

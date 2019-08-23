@@ -5,11 +5,8 @@ import { Link } from "react-router-dom";
 import { createCity } from "../actions/cmsActions";
 
 import Header from "../components/layout/Header";
+import { Button, Form, FormGroup, Label, Input, FormText, Card , Modal, ModalHeader, ModalBody, ModalFooter,} from 'reactstrap';
 
-import Card from "@material-ui/core/Card";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import Icon from "@material-ui/core/Icon";
 
 class Cmscity extends Component {
   constructor() {
@@ -109,7 +106,7 @@ class Cmscity extends Component {
           <Card raised className="commentForm">
             <form encType="multipart/form-data" onSubmit={this.onSubmit}>
               <div>
-                <TextField
+                <Input 
                   className="commentFormInput"
                   id="outlined-with-placeholder"
                   label="Please enter City Name:"
@@ -127,7 +124,7 @@ class Cmscity extends Component {
                 <div className="invalid-feedback">{errors.cityname}</div>
               )}
               <div>
-                <TextField
+                <Input 
                   className="commentFormInput"
                   id="outlined-with-placeholder"
                   label="Please enter City Country:"
@@ -157,7 +154,7 @@ class Cmscity extends Component {
               <React.Fragment>
                 <div className="cmsAction">
                   <Button variant="outlined" color="primary" disabled>
-                    Create City!<Icon>save</Icon>
+                    Create City!
                   </Button>
                 </div>
                 <div>
@@ -175,7 +172,7 @@ class Cmscity extends Component {
                     onClick={this.onSubmit}
                     value="Submit"
                   >
-                    Create City!<Icon>save</Icon>
+                    Create City!
                   </Button>
                 </div>
               </React.Fragment>

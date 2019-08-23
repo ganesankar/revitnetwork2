@@ -7,16 +7,23 @@ import {
   CardFooter,
   CardTitle,
   Row,
-  Col
+  Col,
+  Input,
+  Media
 } from "reactstrap";
-import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faUserGraduate,
+  faChalkboardTeacher,
+  faCalendar,
+  faLink
+} from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchCities } from "../actions/citiesActions";
+import { fetchStudents } from "../actions/studentsActions";
 import { getCurrentProfile } from "./../actions/profileActions";
 import { debounce } from "lodash";
-
 
 class Students extends Component {
   constructor(props) {
@@ -28,20 +35,13 @@ class Students extends Component {
       query: "",
       error: null,
       text: "",
-      columnDefs: [{
-        headerName: "Make", field: "cityname", sortable: true , filter: true 
-      }, {
-        headerName: "Model", field: "country", sortable: true , filter: true 
-      }, {
-        headerName: "Price", field: "flagimg", sortable: true , filter: true 
-      }],
-      
+
       // filteredCities: []
     };
   }
 
   componentDidMount() {
-    this.props.fetchCities();
+    this.props.fetchStudents();
   }
 
   // SEARCH WITH DEBOUNCE
@@ -52,67 +52,97 @@ class Students extends Component {
   }, 500);
 
   render() {
-    const listArray = [];
-    const listBfore = this.props.cities.cities || [];
-    if(listBfore.length > 0){
-      listBfore.forEach(function (item, index) {
-        const newItem = item;
-        newItem.id = index +1;
-        listArray.push(newItem)
-      });
-    }
-    console.log(listArray);
-
-    const CustomColumn = ({value}) => <span style={{ color: '#0000AA' }}>{value}</span>;
-  const CustomHeading = ({title}) => <span style={{ color: '#AA0000' }}>{title}</span>;
+    let filteredCities = this.props.cities.cities.filter(city => {
+      return (
+        city.cityname.toLowerCase().includes(this.state.query.toLowerCase()) ||
+        city.country.toLowerCase().includes(this.state.query.toLowerCase())
+      );
+    });
 
     return (
       <div>
-        <div className="content">
-        <Container>
-              <Row className="justify-content-center">
-                <Col lg="12">
-                  <h1 className="text-center">Students</h1>
-                  <Row className="row-grid justify-content-center">
-                    
-                    <Col lg="12">
-                    <Card className=" card-plain">
-                    <CardHeader>
-                     
-                    </CardHeader>
-                    <CardBody>
-                      <Row>
-                        <Col className="text-center" md="12">
+        <section className="section section-lg">
+          <Container>
+            <Row className="justify-content-center">
+              <Col lg="12">
+                <h1 className="text-center">
+                  <FontAwesomeIcon icon={faUserGraduate}  />
+                  Students
+                </h1>
 
-                        {listArray.length > 0 &&
-         <div>
-<BootstrapTable ref='table' data={listArray}  >
-      <TableHeaderColumn isKey dataField='id' dataSort={ true } filter={ { type: 'TextFilter'} }>Sl.No</TableHeaderColumn>
-      <TableHeaderColumn  dataField='cityname' dataSort={ true } filter={ { type: 'TextFilter'} }>Product ID</TableHeaderColumn>
-      <TableHeaderColumn dataField='country' dataSort={ true } filter={ { type: 'TextFilter'} }>Product Name</TableHeaderColumn>
-      <TableHeaderColumn dataField='flagimg'>Product Price</TableHeaderColumn>
-  </BootstrapTable>,
-           
-         </div>
-      }
-                       
+                <hr className="line-primary" />
+                <Row className="row-grid justify-content-center">
+                  <Col lg="6">
+                    
+                  </Col>
+                  <Col lg="6">
+                    {" "}
+                    <Input
+                      id="filled-with-placeholder"
+                      label="Search Destinations"
+                      type="text"
+                      placeholder="Type to Search "
+                      onChange={e => this.handleSearch(e.target.value)}
+                      margin="normal"
+                      className="cityfilter"
+                      variant="outlined"
+                    />
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+            {filteredCities.length < 1 ? (
+              <div className="paragraphText">
+                There are no destinations matching your search query.
+              </div>
+            ) : (
+              <React.Fragment>
+                {filteredCities.map(city => {
+                  return (
+                    <React.Fragment key={city._id}>
+                      <Row>
+                        {" "}
+                        <Col lg="12">
+                          <Link
+                            to={{
+                              pathname: "/student/" + city.url,
+                              state: {
+                                city: city.cityname,
+                                country: city.country,
+                                url: city.flagimg
+                              }
+                            }}
+                            className="citylist"
+                          >
+                            <Card>
+                              <Media>
+                                <Media left href="#">
+                                  <Media
+                                    object
+                                    data-src={require("../images/revit.png")}
+                                    alt="Generic placeholder image"
+                                  />
+                                </Media>
+                                <Media body>
+                                  <Media heading>{city.cityname}</Media>
+                                  {city.country}
+                                </Media>
+                              </Media>
+                            </Card>
+                          </Link>
                         </Col>
                       </Row>
-                    </CardBody>
-                    <CardFooter className="text-center">
-                    
-                    </CardFooter>
-                  </Card>
-                      
-                  
-                    </Col>
-                  </Row>
-                </Col>
-              </Row>
-            </Container>
-        
-         
-        </div>
+                    </React.Fragment>
+                  );
+                })}
+              </React.Fragment>
+            )}
+          </Container>
+        </section>
+        <div className="citysearchflex"></div>
+
+        {/* CITIES */}
+        <div></div>
       </div>
     );
   }
@@ -128,11 +158,11 @@ const mapStateToProps = state => {
 
 Students.propTypes = {
   cities: PropTypes.object,
-  fetchCities: PropTypes.func,
+  fetchStudents: PropTypes.func,
   getCurrentProfile: PropTypes.func
 };
 
 export default connect(
   mapStateToProps,
-  { fetchCities, getCurrentProfile }
+  { fetchStudents, getCurrentProfile }
 )(Students);

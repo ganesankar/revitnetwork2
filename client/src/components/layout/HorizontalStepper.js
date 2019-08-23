@@ -1,13 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import Stepper from "@material-ui/core/Stepper";
-import Step from "@material-ui/core/Step";
-import StepLabel from "@material-ui/core/StepLabel";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import Card from "@material-ui/core/Card";
-
+import {
+  Button,
+  Card,
+  Alert 
+  
+} from "reactstrap";
 const styles = theme => ({
   root: {
     width: "80%"
@@ -101,27 +99,12 @@ class HorizontalLinearStepper extends React.Component {
     return (
       <div className="cmsBox">
         <Card raised className="cmsCard">
-          <Stepper activeStep={activeStep}>
-            {steps.map((label, index) => {
-              const props = {};
-              const labelProps = {};
-
-              if (this.isStepSkipped(index)) {
-                props.completed = false;
-              }
-              return (
-                <Step key={label} {...props}>
-                  <StepLabel {...labelProps}>{label}</StepLabel>
-                </Step>
-              );
-            })}
-          </Stepper>
           <div>
             {activeStep === steps.length ? (
               <div className="cmsTitletext">
-                <Typography className={classes.instructions}>
+                <Alert className={classes.instructions}>
                   All steps completed - you&apos;re finished
-                </Typography>
+                </Alert>
                 <Button onClick={this.handleReset} className={classes.button}>
                   Reset
                 </Button>
@@ -129,9 +112,9 @@ class HorizontalLinearStepper extends React.Component {
             ) : (
               <div>
                 <div className="cmsTitletext">
-                  <Typography className={classes.instructions}>
+                  <Alert className={classes.instructions}>
                     {getStepContent(activeStep)}
-                  </Typography>
+                  </Alert>
                   <div>
                     <Button
                       disabled={activeStep === 0}
@@ -166,4 +149,4 @@ HorizontalLinearStepper.propTypes = {
   classes: PropTypes.object
 };
 
-export default withStyles(styles)(HorizontalLinearStepper);
+export default HorizontalLinearStepper;

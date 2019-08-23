@@ -9,7 +9,7 @@ import IconCity from "../components/layout/IconCity";
 import Header from "../components/layout/Header";
 import ItinCard from "../components/layout/ItinCard";
 
-import Card from "@material-ui/core/Card";
+import {  Card } from 'reactstrap';
 
 class Dashboard extends Component {
   constructor(props) {
