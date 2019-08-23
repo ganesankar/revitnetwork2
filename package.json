@@ -60,12 +60,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jorgedelafuente/mytinerary.git"
+    "url": "git+https://github.com/ganesankar/revitnetwork2.git"
   },
   "author": "Jorge de La Fuente",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jorgedelafuente/mytinerary/issues"
+    "url": "https://github.com/ganesankar/revitnetwork2/issues"
   },
-  "homepage": "https://github.com/jorgedelafuente/mytinerary#readme"
+  "homepage": "https://github.com/ganesankar/revitnetwork2#readme"
 }
