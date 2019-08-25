@@ -39,7 +39,6 @@ import {
 } from "react-social-login-buttons";
 import Header from "./../components/layout/Header";
 
-import CustomButton from "../components/layout/CustomButton";
 
 
 class Login extends Component {

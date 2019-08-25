@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { registerUser } from "../actions/authActions";
 
-import CustomButton from "../components/layout/CustomButton";
 import Header from "./../components/layout/Header";
 
 import { Button, Form, FormGroup, Label, Input, FormText, Card , Modal, ModalHeader, ModalBody, ModalFooter,} from 'reactstrap';
@@ -118,7 +117,7 @@ class Signup extends Component {
     const { errors } = this.state;
 
     const checkboxFalseBtn = (
-      <CustomButton
+      <button
         disabled={true}
         color={"primary"}
         title={"Agree to Terms & Conditions"}
@@ -130,7 +129,7 @@ class Signup extends Component {
     );
 
     const checkboxTrueBtn = (
-      <CustomButton
+      <button
         bgcolor={"#039be5"}
         disabled={false}
         color={"primary"}

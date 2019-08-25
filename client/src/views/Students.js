@@ -47,8 +47,8 @@ class Students extends Component {
 
                   <hr className="line-primary m-auto" />
                   <Row className="row-grid justify-content-center">
-                    <Col lg="6"></Col>
-                    <Col lg="6">
+                     <div  className="m-auto">
+                       <br/>
                       <Input
                         id="filled-with-placeholder"
                         label="Search Destinations"
@@ -59,7 +59,8 @@ class Students extends Component {
                         className="cityfilter"
                         variant="outlined"
                       />
-                    </Col>
+                      <br/>
+                    </div>
                   </Row>
                 </Col>
               </Row>

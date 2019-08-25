@@ -9,13 +9,8 @@ const cookierParser = require("cookie-parser");
 const path = require("path");
 
 //ROUTES
-const citydb = require("./routes/api/citydb");
 const studentdb = require("./routes/api/studentsdb");
 const staffdb = require("./routes/api/staffdb");
-const itinerarydb = require("./routes/api/itinerarydb");
-const activitydb = require("./routes/api/activitydb");
-const commentdb = require("./routes/api/commentdb");
-const cmsdb = require("./routes/api/cmsdb");
 const profiledb = require("./routes/api/profiledb");
 const usersdb = require("./routes/api/usersdb");
 
@@ -47,13 +42,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/uploads", express.static("uploads"));
 
 // API ROUTES
-app.use("/api", citydb);
 app.use("/api", studentdb);
 app.use("/api", staffdb);
-app.use("/api", itinerarydb);
-app.use("/api", activitydb);
-app.use("/api", commentdb);
-app.use("/api", cmsdb);
 app.use('/adminlogin', appAdmin);
 // EXPRESS MIDDLWARE
 app.use(cookierParser());

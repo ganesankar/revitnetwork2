@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { debounce } from "lodash";
 import { fetchStudent, updateStudent } from "../actions/studentsActions";
-import { deleteCity } from "../actions/cmsActions";
 import { socialNetList } from "../actions/utils/general";
 import BreadCrumbGen from "../components/common/BreadCrumbGen";
 import LoadAnimate from "../components/common/LoadAnimate";
@@ -578,5 +577,5 @@ StudentEdit.propTypes = {
 
 export default connect(
   mapStateToProps,
-  { fetchStudent, updateStudent, deleteCity }
+  { fetchStudent, updateStudent }
 )(StudentEdit);

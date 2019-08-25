@@ -1,7 +1,5 @@
 import {
-  FETCH_ITINERARIES_ID,
-  POST_FAVORITES,
-  DELETE_FAVORITES,
+  
   GET_PROFILE,
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE
@@ -30,26 +28,9 @@ export default function(state = initialState, action) {
         favid: action.payload.favorites
         // loading: false
       };
-    // GETS FAVORITES FROM ITINERARIES USING ITIN ID
-    case FETCH_ITINERARIES_ID:
-      return {
-        ...state,
-        favitin: action.payload
-      };
-    // SAVE FAVOURITES
-    case POST_FAVORITES:
-      return {
-        ...state,
-        favid: [action.payload, ...state.favid]
-      };
-    // REMOVE FAVOURITES
-    case DELETE_FAVORITES:
-      return {
-        ...state,
-        favitin: state.favitin.filter(
-          favorite => favorite._id !== action.payload
-        )
-      };
+    
+    
+    
     case CLEAR_CURRENT_PROFILE:
       return {
         ...state,

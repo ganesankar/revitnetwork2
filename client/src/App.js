@@ -16,9 +16,7 @@ import Navbar from "./components/layout/Navbar";
 import BottomNav from "./components/layout/BottomNav";
 
 // ROUTES
-import City from "./views/City";
 import Home from "./views/Home";
-import Cities from "./views/Cities";
 
 import Students from "./views/Students";
 import Student from "./views/Student";
@@ -30,15 +28,6 @@ import StaffEdit from "./views/StaffEdit";
 
 import Login from "./views/Login";
 import Signup from "./views/Signup";
-import Cmsitin from "./views/Cmsitin";
-import Cmsactivity from "./views/Cmsactivity";
-import Cmscity from "./views/Cmscity";
-import EditActivity from "./components/EditActivity";
-import EditItinerary from "./components/EditItinerary";
-import Editcity from "./components/Editcity";
-import Dashboard from "./views/Dashboard";
-import Hashtag from "./views/Hashtag";
-import Cms from "./views/Cms";
 
 // JWT TOKEN
 if (sessionStorage.jwtToken) {
@@ -74,46 +63,14 @@ class App extends Component {
                 <Route exact path="/" component={Home} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
-                <Route exact path="/cities" component={Cities} />
                 <Route exact path="/students" component={Students} />
                 <Route exact path="/student/:url" component={Student} />
                 <PrivateRoute exact path="/student/edit/:url" component={StudentEdit} />
                 <Route exact path="/staffs" component={Staffs} />
                 <Route exact path="/staff/:url" component={Staff} />
                 <PrivateRoute exact path="/staff/edit/:url" component={StaffEdit} />
-                <PrivateRoute exact path="/cms" component={Cms} />
-                <PrivateRoute exact path="/cmsitinerary" component={Cmsitin} />
-                <PrivateRoute
-                  exact
-                  path="/cmsactivity"
-                  component={Cmsactivity}
-                />
-                <PrivateRoute exact path="/cmscity" component={Cmscity} />
-                <PrivateRoute
-                  exact
-                  path="/cmscity/editcity"
-                  component={Editcity}
-                />
-                <PrivateRoute
-                  exact
-                  path="/cmsitinerary/edititinerary"
-                  component={EditItinerary}
-                />
-                <PrivateRoute
-                  exact
-                  path="/cmsactivity/editactivity"
-                  component={EditActivity}
-                />
-                <PrivateRoute exact path="/dashboard" component={Dashboard} />
-                <Route
-                  path="/cities/:city_name"
-                  render={props => <City {...props} isAuthed={true} />}
-                />
-                <Route
-                  exact
-                  path="/hashtag/:itinerary"
-                  render={props => <Hashtag {...props} isAuthed={true} />}
-                />
+               
+                
               </Switch>
             </div>
            
