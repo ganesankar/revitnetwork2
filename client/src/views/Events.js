@@ -28,9 +28,8 @@ class Events extends Component {
   }, 500);
 
   render() {
-    console.log("Events VIEW");
+    
     const { Events, getEventsLoading , getStaffFailed} = this.props.Events;
-    console.log(this.props.Events);
     let filteredEvents = Events || [];
     return (
       <div>

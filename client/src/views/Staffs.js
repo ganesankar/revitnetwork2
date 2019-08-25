@@ -28,10 +28,8 @@ class Staffs extends Component {
   }, 500);
 
   render() {
-    console.log("STAFFS VIEW");
     const { staffs, getStaffsLoading , getStaffsFailed} = this.props.staffs;
-    console.log(this.props.staffs);
-    let filteredstaffs = staffs || [];
+     let filteredstaffs = staffs || [];
     return (
       <div>
         {getStaffsLoading && <LoadAnimate position="absolute"> </LoadAnimate>}

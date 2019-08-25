@@ -29,9 +29,7 @@ class Students extends Component {
   }, 500);
 
   render() {
-    console.log("STUDENTS VIEW");
-    const { students, getStudentsLoading } = this.props.students;
-    console.log(this.props.students);
+   const { students, getStudentsLoading } = this.props.students;
     let filteredstudents = students || [];
     return (
       <div>

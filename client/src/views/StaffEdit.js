@@ -131,7 +131,6 @@ class StaffEdit extends Component {
     });
   }, 500);
 
-
   // IMAGE INFO
   fileChangedHandler = event => {
     this.setState({
@@ -211,12 +210,8 @@ class StaffEdit extends Component {
     this.setState({ semesterlist });
   };
 
-
   render() {
-    console.log(this.props.staffs);
-    console.log("STUDENTS EDIT", this.props.staffs);
     const {
-      staff,
       getStaffsLoading,
       staffUpdateSuccess,
       staffUpdateError
@@ -384,7 +379,7 @@ class StaffEdit extends Component {
                 <Col>
                   <FormGroup>
                     <Label for="exampleEmail">Date of Birth</Label>
-                    
+
                     <Input
                       label="Please enter Date of Birth:"
                       placeholder="Date of Birth"
