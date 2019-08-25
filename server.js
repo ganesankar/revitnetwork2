@@ -14,7 +14,6 @@ const staffdb = require("./routes/api/staffdb");
 const profiledb = require("./routes/api/profiledb");
 const usersdb = require("./routes/api/usersdb");
 
-const login = require("./routes/login");
 
 //ROUTES
 require("./models/usermodel");

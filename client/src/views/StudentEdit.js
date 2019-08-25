@@ -182,7 +182,7 @@ class StudentEdit extends Component {
   render() {
     console.log(this.props.students);
     console.log("STUDENTS EDIT" , this.props.students);
-    const { student, getStudentsLoading ,studentUpdateSuccess, studentUpdateError } = this.props.students;
+    const {  getStudentsLoading ,studentUpdateSuccess, studentUpdateError } = this.props.students;
     if (studentUpdateSuccess && studentActiveUpdate) {
       ToastsStore.success("Changes Saved Successfully!");
       studentActiveUpdate = false;

@@ -8,10 +8,7 @@ import {
   CardHeader,
   CardBody,
   CardFooter,
-  CardImg,
   CardTitle,
-  Label,
-  FormGroup,
   Form,
   Input,
   InputGroupAddon,
@@ -22,7 +19,6 @@ import {
   Col
 } from "reactstrap";
 
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   loginUser,
@@ -30,16 +26,9 @@ import {
   socialRegisterUser
 } from "../actions/authActions";
 import { GoogleLogin } from "react-google-login";
-import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { googleClientID } from "./../keys.js";
 
-import {
-  FacebookLoginButton,
-  GoogleLoginButton
-} from "react-social-login-buttons";
-import Header from "./../components/layout/Header";
-
-
+import { GoogleLoginButton } from "react-social-login-buttons";
 
 class Login extends Component {
   constructor() {
@@ -116,21 +105,6 @@ class Login extends Component {
 
   render() {
     const { errors } = this.state;
-    const responseFacebook = response => {
-      console.log(response);
-      let facebookData;
-      facebookData = {
-        facebookID: response.id,
-        email: response.email,
-        password: "",
-        username: response.name,
-        firstname: "",
-        lastname: "",
-        avatar: response.picture.data.url,
-        accesstoken: response.accessToken
-      };
-      this.props.socialRegisterUser(facebookData);
-    };
 
     const responseGoogle = response => {
       let googleData;
@@ -150,124 +124,131 @@ class Login extends Component {
     const loginComponent = (
       <React.Fragment>
         <div className="page-header">
-            <div className="page-header-image" />
-            <div className="content">
-              <Container>
-                <Row>
-                  <Col className="offset-lg-0 offset-md-3" lg="5" md="6">
-                   
-                    <Card className="card-register">
-                      <CardHeader>
-                        
-                        <CardTitle tag="h4" className="text-white">Login</CardTitle>
-                      </CardHeader>
-                      <CardBody>
-                        <Form  onSubmit={this.onSubmit}>
-                         
-                          <InputGroup
-                            className={classnames({
-                              "input-group-focus": this.state.emailFocus
-                            })}
-                          >
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="tim-icons icon-email-85" />
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                              placeholder="Email"
-                              type="text"
-                              
-                  name="email"
-                  value={this.state.email}
-                  onChange={this.onChange}
-                  errorform={errors.email}
-                              onFocus={e => this.setState({ emailFocus: true })}
-                              onBlur={e => this.setState({ emailFocus: false })}
-                            />
-                            {errors.email && (
-                <div className="invalid-feedback">{errors.email}</div>
-              )}
-                          </InputGroup>
-                          <InputGroup
-                            className={classnames({
-                              "input-group-focus": this.state.passwordFocus
-                            })}
-                          >
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="tim-icons icon-lock-circle" />
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                              placeholder="Password"
-                              type="password"
-                              name="password"
-                              value={this.state.password}
-                              onChange={this.onChange}
-                              errorform={errors.password}
-                              onFocus={e =>
-                                this.setState({ passwordFocus: true })
-                              }
-                              onBlur={e =>
-                                this.setState({ passwordFocus: false })
-                              }
-                            />
-                             {errors.password && (
-                  <div>
-                    <div className="invalid-feedback">{errors.password}</div>
-                    <div className="removePhotoDiv" />
-                  </div>
-                )}
-                          </InputGroup>
-                        </Form>
-                      </CardBody>
-                      <CardFooter>
-                        <Button  type="submit" className="btn-round" color="primary" size="lg">
-                          Get Started
-                        </Button>
-
-                        <GoogleLogin
-                    clientId={googleClientID}
-                    render={renderProps => (
-                      <GoogleLoginButton
+          <div className="page-header-image" />
+          <div className="content">
+            <Container>
+              <Row>
+                <Col className="offset-lg-0 offset-md-3" lg="5" md="6">
+                  <Card className="card-register">
+                    <CardHeader>
+                      <CardTitle tag="h4" className="text-white">
+                        Login
+                      </CardTitle>
+                    </CardHeader>
+                    <CardBody>
+                      <Form onSubmit={this.onSubmit}>
+                        <InputGroup
+                          className={classnames({
+                            "input-group-focus": this.state.emailFocus
+                          })}
+                        >
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="tim-icons icon-email-85" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            placeholder="Email"
+                            type="text"
+                            name="email"
+                            value={this.state.email}
+                            onChange={this.onChange}
+                            errorform={errors.email}
+                            onFocus={e => this.setState({ emailFocus: true })}
+                            onBlur={e => this.setState({ emailFocus: false })}
+                          />
+                          {errors.email && (
+                            <div className="invalid-feedback">
+                              {errors.email}
+                            </div>
+                          )}
+                        </InputGroup>
+                        <InputGroup
+                          className={classnames({
+                            "input-group-focus": this.state.passwordFocus
+                          })}
+                        >
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="tim-icons icon-lock-circle" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            placeholder="Password"
+                            type="password"
+                            name="password"
+                            value={this.state.password}
+                            onChange={this.onChange}
+                            errorform={errors.password}
+                            onFocus={e =>
+                              this.setState({ passwordFocus: true })
+                            }
+                            onBlur={e =>
+                              this.setState({ passwordFocus: false })
+                            }
+                          />
+                          {errors.password && (
+                            <div>
+                              <div className="invalid-feedback">
+                                {errors.password}
+                              </div>
+                              <div className="removePhotoDiv" />
+                            </div>
+                          )}
+                        </InputGroup>
+                      </Form>
+                    </CardBody>
+                    <CardFooter>
+                      <Button
+                        type="submit"
                         className="btn-round"
-                        alt="googleLogo"
-                        onClick={renderProps.onClick}
-                        align={"center"}
+                        color="primary"
+                        size="lg"
                       >
-                        <span>Google</span>
-                      </GoogleLoginButton>
-                    )}
-                    buttonText="Login with Google"
-                    onSuccess={responseGoogle}
-                    onFailure={responseGoogle}
-                    className="btn-round"
-                    theme="dark"
-                  />
-                  <p> Currently Registration and login is disbaled, Please use google login </p>
-                      </CardFooter>
-                    </Card>
-                  </Col>
-                </Row>
-                
-              </Container>
-            </div>
+                        Get Started
+                      </Button>
+
+                      <GoogleLogin
+                        clientId={googleClientID}
+                        render={renderProps => (
+                          <GoogleLoginButton
+                            className="btn-round"
+                            alt="googleLogo"
+                            onClick={renderProps.onClick}
+                            align={"center"}
+                          >
+                            <span>Google</span>
+                          </GoogleLoginButton>
+                        )}
+                        buttonText="Login with Google"
+                        onSuccess={responseGoogle}
+                        onFailure={responseGoogle}
+                        className="btn-round"
+                        theme="dark"
+                      />
+                      <p>
+                        {" "}
+                        Currently Registration and login is disbaled, Please use
+                        google login{" "}
+                      </p>
+                    </CardFooter>
+                  </Card>
+                </Col>
+              </Row>
+            </Container>
           </div>
-        
+        </div>
       </React.Fragment>
     );
     const noAccountMessage = (
       <div>
         <p className="createAccountText">
-         {" "}
-         {
-           /*
+          {" "}
+          {/*
             <Link to="/Signup">
             <span className="createAccountLink">Create an account!</span>
           </Link>{" "}
-           */
-         }
+           */}
         </p>
       </div>
     );

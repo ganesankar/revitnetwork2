@@ -7,8 +7,17 @@ import { registerUser } from "../actions/authActions";
 
 import Header from "./../components/layout/Header";
 
-import { Button, Form, FormGroup, Label, Input, FormText, Card , Modal, ModalHeader, ModalBody, ModalFooter,} from 'reactstrap';
-
+import {
+  Button,
+  FormGroup,
+  Label,
+  Input,
+  Card,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter
+} from "reactstrap";
 
 function Transition(props) {
   return <div direction="up" {...props} />;
@@ -144,12 +153,14 @@ class Signup extends Component {
 
     const checkboxFalse = (
       <div>
-
-<Input type="checkbox"  value="t&c"
+        <Input
+          type="checkbox"
+          value="t&c"
           color="primary"
           name="t&c_checkbox"
-          onClick={this.tccheckbox}/>
-        
+          onClick={this.tccheckbox}
+        />
+
         <span>
           I agree to MYtinerarys{" "}
           <span className="tandc" onClick={this.handleClickOpen}>
@@ -204,7 +215,6 @@ class Signup extends Component {
             variant="contained"
           >
             Remove Image
-            
           </Button>
         </div>
       </React.Fragment>
@@ -333,18 +343,15 @@ class Signup extends Component {
               </div>
               <div>
                 <div>
-                  <FormGroup  variant="filled">
-                    <Label  htmlFor="filled-country-simple">
-                      Country:
-                    </Label >
-                    <Input type="select"
+                  <FormGroup variant="filled">
+                    <Label htmlFor="filled-country-simple">Country:</Label>
+                    <Input
+                      type="select"
                       className="selectForms"
                       value={this.state.country}
                       onChange={this.onChange}
                       errorform={errors.country}
-                     
                       name="country"
-                      
                     >
                       <option value="">
                         <em>None</em>
@@ -357,7 +364,7 @@ class Signup extends Component {
                       <option value="Ireland">Ireland</option>
                       <option value="USA">USA</option>
                     </Input>
-                  </FormGroup >
+                  </FormGroup>
                 </div>
               </div>
               {errors.country && (
@@ -378,16 +385,15 @@ class Signup extends Component {
                   aria-labelledby="alert-Modal-slide-title"
                   aria-describedby="alert-Modal-slide-description"
                 >
-                  <ModalHeader  id="alert-Modal-slide-title">
+                  <ModalHeader id="alert-Modal-slide-title">
                     {"MYtinerary Terms & Conditions"}
-                  </ModalHeader >
+                  </ModalHeader>
                   <ModalBody>
-                      Let MYtinerary help apps determine location. This means
-                      sending anonymous data to MYtinerary, even when no apps
-                      are running.
+                    Let MYtinerary help apps determine location. This means
+                    sending anonymous data to MYtinerary, even when no apps are
+                    running.
                   </ModalBody>
                   <ModalFooter>
-                    
                     <Button onClick={this.handleClose} color="primary">
                       Disagree
                     </Button>

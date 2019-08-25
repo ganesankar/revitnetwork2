@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {
-  Button,
   Collapse,
   NavbarBrand,
   Navbar,
@@ -10,8 +9,7 @@ import {
   Nav,
   Container,
   Row,
-  Col,
-  Media
+  Col
 } from "reactstrap";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -82,29 +80,24 @@ class MenuAppBar extends React.Component {
     // NAVIGATION
     const loginState = (
       <React.Fragment>
-        {/* <Divider /> */}
-        <NavItem className="p-0 MenuNavLink">
+        <NavItem className="btn btn-icon btn-simple btn-round btn-neutral MenuNavLink">
           <NavLink href="/">
-          <FontAwesomeIcon icon={faHome} />
-            <span className="">Home</span>
+            <FontAwesomeIcon icon={faHome} />
           </NavLink>
         </NavItem>
-        <NavItem className="p-0 MenuNavLink">
+        <NavItem className="btn btn-icon btn-simple btn-round btn-neutral MenuNavLink">
           <NavLink href="/students">
-          <FontAwesomeIcon icon={faUserGraduate} />
-            <span className="">Students</span>
+            <FontAwesomeIcon icon={faUserGraduate} />
           </NavLink>
         </NavItem>
-        <NavItem className="p-0 MenuNavLink">
+        <NavItem className="btn btn-icon btn-simple btn-round btn-neutral MenuNavLink ">
           <NavLink href="/staffs">
-          <FontAwesomeIcon icon={faChalkboardTeacher} />
-            <span className="">Staffs</span>
+            <FontAwesomeIcon icon={faChalkboardTeacher} />
           </NavLink>
         </NavItem>
-        <NavItem className="p-0 MenuNavLink">
+        <NavItem className="btn btn-icon btn-simple btn-round btn-neutral MenuNavLink">
           <NavLink onClick={this.onLogoutClick.bind(this)} to="/">
-          <FontAwesomeIcon icon={faSignOutAlt} />
-            <span className="">Log Out</span>
+            <FontAwesomeIcon icon={faSignOutAlt} />
           </NavLink>
         </NavItem>
       </React.Fragment>
@@ -112,10 +105,9 @@ class MenuAppBar extends React.Component {
 
     const logoutState = (
       <div>
-        <NavItem className="p-0 MenuNavLink">
+        <NavItem className="btn btn-icon btn-simple btn-round btn-neutral MenuNavLink MenuNavLink">
           <NavLink href="/login">
             <FontAwesomeIcon icon={faSignInAlt} />
-            <span className="">Login</span>
           </NavLink>
         </NavItem>
       </div>
@@ -129,20 +121,25 @@ class MenuAppBar extends React.Component {
 
     // LINKS
     const authLinks = (
-      <div>
-        <div>
-          <NavLink to="/">
-          <img alt={user.name} className="img-center img-fluid  rounded-circle menuUsrImg" src={user.avatar} />                              
-           
+      <div className="p-0">
+        <div className="p-0">
+          <NavLink to="/" className="p-0">
+            <img
+              alt={user.name}
+              className="img-center img-fluid  rounded-circle menuUsrImg"
+              src={user.avatar}
+            />
           </NavLink>
         </div>
       </div>
     );
     const guestLinks = (
       <div>
-        <Link className="nav-link" to="/login">
-        <FontAwesomeIcon icon={faSignInAlt} />
-            <span className="">Login</span>
+        <Link
+          className="btn btn-icon btn-simple btn-round btn-neutral MenuNavLink"
+          to="/login"
+        >
+          <FontAwesomeIcon icon={faSignInAlt} />
         </Link>
       </div>
     );
@@ -208,7 +205,7 @@ class MenuAppBar extends React.Component {
               <Nav navbar>
                 {sideList}
 
-                {isAuthenticated ? authLinks : guestLinks}
+                {authLinks}
               </Nav>
             </Collapse>
           </Container>
