@@ -3,12 +3,80 @@
   width: 36px;
 }
 .MenuNavLink {
-  line-height:32px
+  line-height: 32px;
 }
 .MenuNavLink svg {
-  
-    margin: 3px 8px 0 0;
+  margin: 3px 8px 0 0;
 }
+
+.loadAbsolute {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  width: 100%;
+  left: 0;
+  min-height: 100vh;
+  padding-top: 45vh;
+  text-align: center;
+}
+
+.appLoaderIcon {
+  animation: spinningColor 1.5s ease-in-out infinite;
+  margin: 50px auto;
+  border: 5px double #f0eff5;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+@keyframes spinningColor {
+  0% {
+    transform: rotate(360deg);
+    border-top: 5px dashed #f56682;
+    border-bottom: 5px dashed #387eff;
+  }
+  25% {
+    border-top: 5px dashed #f591a6;
+    border-bottom: 5px dashed #6da7f7;
+  }
+  50% {
+    border-top: 5px dashed #fd878e;
+    border-bottom: 5px dashed #4ba3ff;
+  }
+  75% {
+    border-top: 5px dashed #f57f8f;
+    border-bottom: 5px dashed #569dff;
+  }
+  100% {
+    border-top: 5px dashed #f56682;
+    border-bottom: 5px dashed #387eff;
+  }
+}
+
+.DayPickerInput input {
+   {
+    display: block;
+    width: 100%;
+    height: calc(2.25rem + 2px);
+    padding: 0.5rem 0.7rem;
+    font-size: 0.875rem;
+    line-height: 1.42857;
+    color: rgba(255, 255, 255, 0.8);
+    background-color: transparent;
+    background-clip: padding-box;
+    adding: 10px 18px 10px 18px;
+    border: 1px solid #cad1d7;
+    border-color: #2b3553;
+    border-radius: 0.4285rem;
+    font-size: 0.75rem;
+    -webkit-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out,
+      background-color 0.3s ease-in-out;
+    transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out,
+      background-color 0.3s ease-in-out;
+  }
+}
+
+/* CITY LIST */
 .citylist {
   text-decoration: none;
 }
@@ -131,7 +199,7 @@
   display: flex;
 }
 
-.activitycard>div {
+.activitycard > div {
   flex: 1;
 }
 
@@ -292,7 +360,7 @@
   text-align: center;
 }
 
-.flexIcons>a {
+.flexIcons > a {
   /* flex: 1; */
   color: black;
 }
@@ -893,7 +961,6 @@
     margin-left: 10px;
     margin-top: 5px;
     float: left;
-
   }
 }
 

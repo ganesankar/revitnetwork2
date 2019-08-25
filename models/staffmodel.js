@@ -1,12 +1,18 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const StudentSchema = new Schema({
-  studentname: {
+const StaffSchema = new Schema({
+  staffname: {
     type: String
   },
-  sprno: {
-    type: Number
+  qualification: {
+    type: String
+  },
+  experience: {
+    type: String
+  },
+  specialization: {
+    type: String
   },
   emailid: {
     type: String
@@ -38,6 +44,12 @@ const StudentSchema = new Schema({
   social: {
     type: String
   },
+  semesterlist: {
+    type: String
+  },
+  subjects: {
+    type: String
+  },
   url: {
     type: String
   },
@@ -55,5 +67,5 @@ const StudentSchema = new Schema({
   }
 });
 
-const Student = mongoose.model("students", StudentSchema);
-module.exports = Student;
+const Staff = mongoose.model("staffs", StaffSchema);
+module.exports = Staff;

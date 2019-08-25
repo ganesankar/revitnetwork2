@@ -19,9 +19,15 @@ import BottomNav from "./components/layout/BottomNav";
 import City from "./views/City";
 import Home from "./views/Home";
 import Cities from "./views/Cities";
+
 import Students from "./views/Students";
 import Student from "./views/Student";
 import StudentEdit from "./views/StudentEdit";
+
+import Staffs from "./views/Staffs";
+import Staff from "./views/Staff";
+import StaffEdit from "./views/StaffEdit";
+
 import Login from "./views/Login";
 import Signup from "./views/Signup";
 import Cmsitin from "./views/Cmsitin";
@@ -71,7 +77,10 @@ class App extends Component {
                 <Route exact path="/cities" component={Cities} />
                 <Route exact path="/students" component={Students} />
                 <Route exact path="/student/:url" component={Student} />
-                <Route exact path="/student/edit/:url" component={StudentEdit} />
+                <PrivateRoute exact path="/student/edit/:url" component={StudentEdit} />
+                <Route exact path="/staffs" component={Staffs} />
+                <Route exact path="/staff/:url" component={Staff} />
+                <PrivateRoute exact path="/staff/edit/:url" component={StaffEdit} />
                 <PrivateRoute exact path="/cms" component={Cms} />
                 <PrivateRoute exact path="/cmsitinerary" component={Cmsitin} />
                 <PrivateRoute

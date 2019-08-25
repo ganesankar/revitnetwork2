@@ -4,13 +4,6 @@ import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Card, ButtonGroup, Button, Container, Row, Col } from "reactstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faUserGraduate,
-  faChalkboardTeacher,
-  faCalendar,
-  faLink
-} from "@fortawesome/free-solid-svg-icons";
 
 class UserListCard extends Component {
   render() {
@@ -39,10 +32,10 @@ class UserListCard extends Component {
               <Col className="p-0"> {userImage}</Col>
               <Col>
                 <Link
-                  to={{ pathname: "/student/" + profileData._id }}
+                  to={{ pathname: viewPath + profileData._id }}
                   className="citylist "
                 >
-                  <h4 className="info-title">{profileData.studentname}</h4>
+                  <h4 className="info-title">{profileData.studentname || profileData.staffname}</h4>
                 </Link>
 
                 <hr className="line-primary" />
@@ -53,14 +46,14 @@ class UserListCard extends Component {
                   {profileData.nickname}
                 </p>
                 <ButtonGroup>
-                {viewLink && profileData.url && (
+                {viewLink  && (
               <NavLink to={{ pathname: viewPath + profileData._id }}>
                 <Button className="btn-simple" color="primary" size="sm">
                   VIEW
                 </Button>
               </NavLink>
             )}
-            {editLink && profileData.url && (
+            {editLink && (
               <NavLink to={{ pathname: editPath + profileData._id }}>
                 <Button className="btn-simple" color="success" size="sm">
                   EDIT

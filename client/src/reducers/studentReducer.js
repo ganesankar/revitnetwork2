@@ -1,6 +1,7 @@
 import {
   FETCH_STUDENTS,
   FETCH_STUDENTS_FAILED,
+  FETCH_STUDENTS_LOADING,
   FETCH_STUDENT,
   FETCH_STUDENT_LOADING,
   FETCH_STUDENT_FAILED,
@@ -11,8 +12,9 @@ import {
 
 const initialState = {
   students: [],
+  getStudentsLoading:false,
+  getStudentsFailed: false,
   student: {},
-  getStudentsFailed: {},
   getStudentFailed: false,
   getStudentLoading: false,
   studentUpdateError: {},
@@ -25,6 +27,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         students: action.payload
+      };
+      case FETCH_STUDENTS_LOADING:
+      return {
+        ...state,
+        getStudentsLoading: action.payload
       };
       case FETCH_STUDENTS_FAILED:
       return {

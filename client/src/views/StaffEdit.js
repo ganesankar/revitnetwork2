@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { debounce } from "lodash";
-import { fetchStudent, updateStudent } from "../actions/studentsActions";
+import { fetchStaff, updateStaff } from "../actions/staffsActions";
 import { deleteCity } from "../actions/cmsActions";
-import { socialNetList } from "../actions/utils/general";
+import { socialNetList, semesterList } from "../actions/utils/general";
 import BreadCrumbGen from "../components/common/BreadCrumbGen";
 import LoadAnimate from "../components/common/LoadAnimate";
-import {ToastsContainer, ToastsStore} from 'react-toasts';
+import { ToastsContainer, ToastsStore } from "react-toasts";
+
 import {
   Button,
   Card,
@@ -19,29 +20,36 @@ import {
   CardTitle,
   FormGroup,
   Row,
-  Col
+  Col,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText
 } from "reactstrap";
 
-let studentActiveUpdate = false;
+let staffActiveUpdate = false;
 const sociallist = socialNetList();
-class StudentEdit extends Component {
+const semesterlist = semesterList();
+
+class StaffEdit extends Component {
   constructor(props) {
     super(props);
     this.state = {
       bread: [
-        { name: "Students", link: "/students" },
-        { name: "Create / Edit Student", link: "" }
+        { name: "Staffs", link: "/staffs" },
+        { name: "Create / Edit Staff", link: "" }
       ],
       showlist: false,
       query: "",
       error: null,
       text: "",
       //EDIT
-      students: [],
+      staffs: [],
       social: sociallist.slice(0),
-
-      studentname: "",
-      sprno: "",
+      semesterlist: semesterlist.slice(0),
+      staffname: "",
+      qualification: "",
+      experience: "",
+      specialization: "",
       rollno: "",
       emailid: "",
       nickname: "",
@@ -62,23 +70,24 @@ class StudentEdit extends Component {
   }
   componentDidMount() {
     if (this.props.match.params.url !== "new") {
-      this.props.fetchStudent(this.props.match.params.url);
+      this.props.fetchStaff(this.props.match.params.url);
       this.setState({
-        students: this.props.students.students
+        staffs: this.props.staffs.staffs
       });
     }
   }
   componentWillReceiveProps(nextProps) {
     if (this.props !== nextProps) {
-
-      
-      let selectedValue = nextProps.students.student[0] || {};
+      let selectedValue = nextProps.staffs.staff[0] || {};
 
       if (Object.keys(selectedValue).length > 0) {
         this.setState({
           id: selectedValue._id,
-          studentname: selectedValue.studentname,
-          sprno: selectedValue.sprno,
+          staffname: selectedValue.staffname,
+          qualification: selectedValue.qualification,
+          experience: selectedValue.experience,
+          specialization: selectedValue.specialization,
+
           rollno: selectedValue.rollno,
           emailid: selectedValue.emailid,
           phoneno: selectedValue.phoneno,
@@ -98,11 +107,20 @@ class StudentEdit extends Component {
           showlist: false
         });
         let dbSocial = sociallist.slice(0);
+        let dbSemester = semesterlist.slice(0);
+
         if (selectedValue.social && selectedValue.social.length > 0) {
           dbSocial = JSON.parse(selectedValue.social);
         }
+        if (
+          selectedValue.semesterlist &&
+          selectedValue.semesterlist.length > 0
+        ) {
+          dbSemester = JSON.parse(selectedValue.semesterlist);
+        }
         this.setState({
-          social: dbSocial
+          social: dbSocial,
+          semesterlist: dbSemester
         });
       }
     }
@@ -114,6 +132,7 @@ class StudentEdit extends Component {
     });
   }, 500);
 
+
   // IMAGE INFO
   fileChangedHandler = event => {
     this.setState({
@@ -124,11 +143,13 @@ class StudentEdit extends Component {
 
   // SUBMIT
   onSubmit = e => {
-    studentActiveUpdate = true;
+    staffActiveUpdate = true;
     e.preventDefault();
     const formData = new FormData();
-    formData.append("studentname", this.state.studentname);
-    formData.append("sprno", this.state.sprno);
+    formData.append("staffname", this.state.staffname);
+    formData.append("qualification", this.state.qualification);
+    formData.append("experience", this.state.experience);
+    formData.append("specialization", this.state.specialization);
     formData.append("rollno", this.state.rollno);
     formData.append("flagimg", this.state.flagimg);
     formData.append("emailid", this.state.emailid);
@@ -145,8 +166,9 @@ class StudentEdit extends Component {
     formData.append("url", this.state.url);
     formData.append("id", this.state.id);
     formData.append("social", JSON.stringify(this.state.social));
-    this.props.updateStudent(this.state.id, formData);
-    this.props.fetchStudent(this.props.match.params.url);
+    formData.append("semesterlist", JSON.stringify(this.state.semesterlist));
+    this.props.updateStaff(this.state.id, formData);
+    this.props.fetchStaff(this.props.match.params.url);
   };
 
   // DELETE BUTTON
@@ -179,18 +201,34 @@ class StudentEdit extends Component {
     }
     this.setState({ social });
   };
+  onSemesterChange = e => {
+    const { semesterlist } = this.state;
+    const thisIndex = semesterlist.findIndex(
+      item => item.name === e.target.name
+    );
+    if (thisIndex >= 0) {
+      semesterlist[thisIndex].value = e.target.value;
+    }
+    this.setState({ semesterlist });
+  };
+
 
   render() {
-    console.log(this.props.students);
-    console.log("STUDENTS EDIT" , this.props.students);
-    const { student, getStudentsLoading ,studentUpdateSuccess, studentUpdateError } = this.props.students;
-    if (studentUpdateSuccess && studentActiveUpdate) {
+    console.log(this.props.staffs);
+    console.log("STUDENTS EDIT", this.props.staffs);
+    const {
+      staff,
+      getStaffsLoading,
+      staffUpdateSuccess,
+      staffUpdateError
+    } = this.props.staffs;
+    if (staffUpdateSuccess && staffActiveUpdate) {
       ToastsStore.success("Changes Saved Successfully!");
-      studentActiveUpdate = false;
+      staffActiveUpdate = false;
     }
-    if (studentUpdateError && studentActiveUpdate) {
+    if (staffUpdateError && staffActiveUpdate) {
       ToastsStore.error("Not able to save Changes");
-      studentActiveUpdate = false;
+      staffActiveUpdate = false;
     }
     const previewFile = this.state.previewFile;
     const deleteButton = (
@@ -215,30 +253,30 @@ class StudentEdit extends Component {
             <Container fluid>
               <Row>
                 <Col>
-                  <h4 className="pt-1">College Based Info</h4>
+                  <h4 className="pt-1"> Info</h4>
                   <hr className="line-primary " />
                 </Col>
               </Row>
               <Row>
                 <Col>
                   <FormGroup>
-                    <Label for="studentname">Name</Label>
+                    <Label for="staffname">Name</Label>
                     <Input
                       label="Please enter Name:"
                       placeholder="Name"
                       type="text"
-                      name="studentname"
-                      value={this.state.studentname}
+                      name="staffname"
+                      value={this.state.staffname}
                       onChange={this.onSnakecase}
                     />
                   </FormGroup>
                 </Col>
                 <Col>
                   <FormGroup>
-                    <Label for="nickname">Nick Name</Label>
+                    <Label for="nickname">Other Name</Label>
                     <Input
                       label="Please enter Nick Name:"
-                      placeholder="Nick Name"
+                      placeholder="Other Name"
                       type="text"
                       name="nickname"
                       value={this.state.nickname}
@@ -252,7 +290,7 @@ class StudentEdit extends Component {
                   <FormGroup>
                     <Label for="rollno">Roll No</Label>
                     <Input
-                      label="Please enter SPR No:"
+                      label="Please enter Roll No:"
                       placeholder="Roll No"
                       type="text"
                       name="rollno"
@@ -263,13 +301,41 @@ class StudentEdit extends Component {
                 </Col>
                 <Col>
                   <FormGroup>
-                    <Label for="sprno">SPR No</Label>
+                    <Label for="qualification">Qualification </Label>
                     <Input
-                      label="Please enter SPR No:"
-                      placeholder="SPR No"
+                      label="Please enter Qualification:"
+                      placeholder="Qualification"
                       type="text"
-                      name="sprno"
-                      value={this.state.sprno}
+                      name="qualification"
+                      value={this.state.qualification}
+                      onChange={this.onSnakecase}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <FormGroup>
+                    <Label for="rollno">Experience</Label>
+                    <Input
+                      label="Please enter Experience"
+                      placeholder="Experience"
+                      type="text"
+                      name="experience"
+                      value={this.state.experience}
+                      onChange={this.onSnakecase}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col>
+                  <FormGroup>
+                    <Label for="specialization">Specialization</Label>
+                    <Input
+                      label="Please enter Specialization"
+                      placeholder="Specialization"
+                      type="text"
+                      name="specialization"
+                      value={this.state.specialization}
                       onChange={this.onSnakecase}
                     />
                   </FormGroup>
@@ -319,10 +385,11 @@ class StudentEdit extends Component {
                 <Col>
                   <FormGroup>
                     <Label for="exampleEmail">Date of Birth</Label>
+                    
                     <Input
                       label="Please enter Date of Birth:"
                       placeholder="Date of Birth"
-                      type="text"
+                      type="date"
                       name="dob"
                       value={this.state.dob}
                       onChange={this.onSnakecase}
@@ -401,7 +468,7 @@ class StudentEdit extends Component {
                       label="Please enter Work:"
                       placeholder="Work"
                       type="text"
-                      name="Work"
+                      name="work"
                       value={this.state.work}
                       onChange={this.onSnakecase}
                     />
@@ -421,6 +488,33 @@ class StudentEdit extends Component {
                     />
                   </FormGroup>
                 </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <h4 className="pt-1">Subjects Handled By Semester</h4>
+                  <hr className="line-primary " />
+                </Col>
+              </Row>
+              <Row>
+                {this.state.semesterlist.map(semester => {
+                  return (
+                    <React.Fragment key={semester.id}>
+                      <Col lg="6">
+                        <InputGroup>
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>{semester.name} </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            type="text"
+                            name={semester.name}
+                            value={semester.value}
+                            onChange={this.onSemesterChange}
+                          />
+                        </InputGroup>
+                      </Col>
+                    </React.Fragment>
+                  );
+                })}
               </Row>
               <Row>
                 <Col>
@@ -509,9 +603,9 @@ class StudentEdit extends Component {
 
     return (
       <React.Fragment>
-        {getStudentsLoading &&  <LoadAnimate position="absolute"> </LoadAnimate> }
-        
-        <ToastsContainer store={ToastsStore}/>
+        {getStaffsLoading && <LoadAnimate position="absolute"> </LoadAnimate>}
+
+        <ToastsContainer store={ToastsStore} />
         <section className="section section-lg">
           <Container>
             <Row className="justify-content-center">
@@ -523,7 +617,7 @@ class StudentEdit extends Component {
                   <CardTitle>
                     {" "}
                     <br />
-                    <h1 className="text-center"> Students Edit </h1>
+                    <h1 className="text-center"> Staffs Edit </h1>
                   </CardTitle>
                   <CardSubtitle>
                     <BreadCrumbGen list={this.state.bread}></BreadCrumbGen>
@@ -565,18 +659,18 @@ class StudentEdit extends Component {
 
 const mapStateToProps = state => {
   return {
-    students: state.students,
+    staffs: state.staffs,
     profile: state.profile,
     auth: state.auth
   };
 };
 
-StudentEdit.propTypes = {
-  students: PropTypes.object,
-  fetchStudent: PropTypes.func
+StaffEdit.propTypes = {
+  staffs: PropTypes.object,
+  fetchStaff: PropTypes.func
 };
 
 export default connect(
   mapStateToProps,
-  { fetchStudent, updateStudent, deleteCity }
-)(StudentEdit);
+  { fetchStaff, updateStaff, deleteCity }
+)(StaffEdit);

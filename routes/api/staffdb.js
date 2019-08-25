@@ -1,14 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const Studentmodel = require("../../models/studentmodel");
+const Staffmodel = require("../../models/staffmodel");
 const multer = require("multer");
 
 //VALIDATION
-const validateStudent = require("../../validation/student");
+const validateStaff = require("../../validation/staff");
 //MULTER SETUP
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, "./uploads/students/");
+    cb(null, "./uploads/staffs/");
   },
   filename: function(req, file, cb) {
     cb(
@@ -27,13 +27,13 @@ const fileFilter = (req, file, cb) => {
   }
 };
 //GET
-// @route api/student
-// @desc GET Student Info
+// @route api/staff
+// @desc GET Staff Info
 // @access Public
 
-router.get("/student", (req, res) => {
-  Studentmodel.find()
-    .then(student => res.json(student))
+router.get("/staff", (req, res) => {
+  Staffmodel.find()
+    .then(staff => res.json(staff))
     .catch(err => {
       res.status(400).json({
         error: err
@@ -41,9 +41,9 @@ router.get("/student", (req, res) => {
     });
 });
 
-router.get("/student/:url", (req, res) => {
-  Studentmodel.find({ _id: req.params.url })
-    .then(student => res.json(student))
+router.get("/staff/:url", (req, res) => {
+  Staffmodel.find({ _id: req.params.url })
+    .then(staff => res.json(staff))
     .catch(err => {
       res.status(400).json({
         error: err
@@ -51,8 +51,8 @@ router.get("/student/:url", (req, res) => {
     });
 });
 //POST
-// @route  api/student
-// @desc POST Student Info (No Image)
+// @route  api/staff
+// @desc POST Staff Info (No Image)
 // @access Public
 
 const upload = multer({
@@ -60,9 +60,9 @@ const upload = multer({
   fileFilter: fileFilter
 });
 
-router.post("/student/:id", upload.any(), (req, res, next) => {
-  console.log("student post");
-  const { errors, isValid } = validateStudent(req.body);
+router.post("/staff/:id", upload.any(), (req, res, next) => {
+  console.log("staff post");
+  const { errors, isValid } = validateStaff(req.body);
   // Check Validation
   if (!isValid) {
     return res.status(400).json(errors);
@@ -70,12 +70,14 @@ router.post("/student/:id", upload.any(), (req, res, next) => {
   const imagenotupdated = req.body.flagimg;
   const flagimg =
     req.body.flagimg === null || req.body.flagimg === undefined
-      ? "/uploads/students/" + req.files[0].filename
+      ? "/uploads/staffs/" + req.files[0].filename
       : imagenotupdated;
 
   const cmsfields = {};
-  cmsfields.studentname = req.body.studentname;
-  cmsfields.sprno = req.body.sprno;
+  cmsfields.staffname = req.body.staffname;
+  cmsfields.qualification = req.body.qualification;
+  cmsfields.experience = req.body.experience;
+  cmsfields.specialization = req.body.specialization;
   cmsfields.rollno = req.body.rollno;
   cmsfields.description = req.body.description;
   cmsfields.phoneno = req.body.phoneno;
@@ -89,17 +91,19 @@ router.post("/student/:id", upload.any(), (req, res, next) => {
   cmsfields.work = req.body.work;
   cmsfields.title = req.body.title;
   cmsfields.social = req.body.social;
+  cmsfields.semesterlist = req.body.semesterlist;
+  
   cmsfields.url = req.body.url;
   cmsfields.flagimg = flagimg;
 
-  Studentmodel.findOneAndUpdate(
+  Staffmodel.findOneAndUpdate(
     { _id: req.params.id },
     { $set: cmsfields },
     { new: true }
   )
     .then(() => {
       res.status(201).json({
-        message: "Student Profile Updated"
+        message: "Staff Profile Updated"
       });
     })
     .catch(err => {
@@ -109,8 +113,8 @@ router.post("/student/:id", upload.any(), (req, res, next) => {
     });
 });
 
-router.post("/student", upload.any(), (req, res, next) => {
-  const { errors, isValid } = validateStudent(req.body);
+router.post("/staff", upload.any(), (req, res, next) => {
+  const { errors, isValid } = validateStaff(req.body);
   // Check Validation
   if (!isValid) {
     return res.status(400).json(errors);
@@ -118,11 +122,13 @@ router.post("/student", upload.any(), (req, res, next) => {
   const imagenotupdated = req.body.flagimg;
   const flagimg =
     req.body.flagimg === null || req.body.flagimg === undefined
-      ? "/uploads/students/" + req.files[0].filename
+      ? "/uploads/staffs/" + req.files[0].filename
       : imagenotupdated;
-  const newstudent = new Studentmodel({
-    studentname: req.body.studentname,
-    sprno: req.body.sprno,
+  const newstaff = new Staffmodel({
+    staffname: req.body.staffname,
+    qualification: req.body.qualification,
+	experience: req.body.experience,
+	specialization: req.body.specialization,
     emailid: req.body.emailid,
     nickname: req.body.nickname,
     dob: req.body.dob,
@@ -133,6 +139,7 @@ router.post("/student", upload.any(), (req, res, next) => {
     work: req.body.work,
     title: req.body.title,
     social: req.body.social,
+	semesterlist: req.body.semesterlist,
     url: req.body.url,
     rollno: req.body.rollno,
     description: req.body.description,
@@ -140,11 +147,11 @@ router.post("/student", upload.any(), (req, res, next) => {
     flagimg: flagimg
   });
 
-  newstudent
+  newstaff
     .save()
     .then(() => {
       res.status(201).json({
-        message: newstudent
+        message: newstaff
       });
     })
     .catch(err => {

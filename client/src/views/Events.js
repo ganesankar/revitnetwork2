@@ -2,24 +2,23 @@ import React, { Component } from "react";
 import { Container, Row, Col, Input } from "reactstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { fetchStudents } from "../actions/studentsActions";
-import { getCurrentProfile } from "./../actions/profileActions";
+import { fetchEvents } from "../actions/EventsActions";
 import { debounce } from "lodash";
 
 import UserListCard from "../components/list/userListCard";
 import NotFound from "../components/errors/NotFound";
 import LoadAnimate from "../components/common/LoadAnimate";
 
-class Students extends Component {
+class Events extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      students: []
+      Events: []
     };
   }
 
   componentDidMount() {
-    this.props.fetchStudents();
+    this.props.fetchEvents();
   }
 
   handleSearch = debounce(text => {
@@ -29,21 +28,21 @@ class Students extends Component {
   }, 500);
 
   render() {
-    console.log("STUDENTS VIEW");
-    const { students, getStudentsLoading } = this.props.students;
-    console.log(this.props.students);
-    let filteredstudents = students || [];
+    console.log("Events VIEW");
+    const { Events, getEventsLoading , getStaffFailed} = this.props.Events;
+    console.log(this.props.Events);
+    let filteredEvents = Events || [];
     return (
       <div>
-        {getStudentsLoading && <LoadAnimate position="absolute"> </LoadAnimate>}
-        {!getStudentsLoading && students.length === 0 ? (
+        {getEventsLoading && <LoadAnimate position="absolute"> </LoadAnimate>}
+        {!getEventsLoading && getStaffFailed  ? (
           <NotFound status="400" />
         ) : (
           <section className="section section-lg">
             <Container>
               <Row className="justify-content-center">
                 <Col lg="4">
-                  <h1 className="text-center">Students</h1>
+                  <h1 className="text-center">Events</h1>
 
                   <hr className="line-primary m-auto" />
                   <Row className="row-grid justify-content-center">
@@ -64,23 +63,23 @@ class Students extends Component {
                 </Col>
               </Row>
               <Row>
-                {filteredstudents.length < 1 ? (
+                {filteredEvents.length < 1 ? (
                   <div className="paragraphText">
                     There are no destinations matching your search query.
                   </div>
                 ) : (
                   <React.Fragment>
-                    {filteredstudents.map(student => {
+                    {filteredEvents.map(staff => {
                       return (
-                        <React.Fragment key={student._id}>
+                        <React.Fragment key={staff._id}>
                           {" "}
                           <Col lg="4">
                             <UserListCard
-                              profileData={student}
+                              profileData={staff}
                               viewLink={true}
                               editLink={true}
-                              viewPath="/student/"
-                              editPath="/student/edit/"
+                              viewPath="/staff/"
+                              editPath="/staff/edit/"
                             />
                           </Col>
                         </React.Fragment>
@@ -99,19 +98,16 @@ class Students extends Component {
 
 const mapStateToProps = state => {
   return {
-    students: state.students,
-    favid: state.favid,
-    profile: state.profile
+    Events: state.Events
   };
 };
 
-Students.propTypes = {
-  students: PropTypes.object,
-  fetchStudents: PropTypes.func,
-  getCurrentProfile: PropTypes.func
+Events.propTypes = {
+  Events: PropTypes.object,
+  fetchEvents: PropTypes.func
 };
 
 export default connect(
   mapStateToProps,
-  { fetchStudents, getCurrentProfile }
-)(Students);
+  { fetchEvents }
+)(Events);

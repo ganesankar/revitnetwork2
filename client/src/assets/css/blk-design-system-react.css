@@ -11848,11 +11848,9 @@ textarea.form-control {
       text-align: left;
       padding-left: 20px; }
   .profile-page .profile-title {
-    position: absolute;
-    top: 110px;
-    left: 60px; }
+    margin:0
+    }
   .profile-page .profile-description {
-    margin-top: -30px;
     max-width: 450px;
     font-size: 0.875rem;
     line-height: 26px; }
@@ -14483,12 +14481,19 @@ input.datetimepicker[data-color="yellow"] + .bootstrap-datetimepicker-widget {
 
 .text-on-back {
   position: relative;
-  z-index: 1;
   font-size: 4.5em;
-  margin-left: -4px;
   font-weight: 900;
-  color: rgba(255, 255, 255, 0.2) !important; }
-
+  color: rgba(255, 255, 255, 0.2) !important;
+  margin: 0;
+  line-height: 1em;}
+  .text-on-back-sm {
+    position: relative;
+    z-index: 1;
+    font-size: 3.5em;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.2) !important;
+    margin: 0;
+    line-height: 1em;}
 .card-chart {
   overflow: hidden; }
   .card-chart .card-header .card-title i {
