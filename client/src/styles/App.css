@@ -1,5 +1,14 @@
 /* CITY LIST */
-
+.menuUsrImg {
+  width: 36px;
+}
+.MenuNavLink {
+  line-height:32px
+}
+.MenuNavLink svg {
+  
+    margin: 3px 8px 0 0;
+}
 .citylist {
   text-decoration: none;
 }

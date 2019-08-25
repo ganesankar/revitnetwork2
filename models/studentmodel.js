@@ -36,15 +36,12 @@ const StudentSchema = new Schema({
     type: String
   },
   social: {
-    type: Array
+    type: String
   },
   url: {
     type: String
   },
   flagimg: {
-    type: String
-  },
-  authorid: {
     type: String
   }
 });

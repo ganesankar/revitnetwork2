@@ -1,7 +1,7 @@
 const Validator = require("validator");
 const isEmpty = require("./is-empty");
 
-module.exports = function validateCmsCity(data) {
+module.exports = function validateStudent(data) {
   let errors = {};
 
   data.studentname = !isEmpty(data.studentname) ? data.studentname : "";

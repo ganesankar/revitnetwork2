@@ -215,7 +215,7 @@ class Editcity extends Component {
               <React.Fragment>
                 <div className="cmsAction">
                   <Button
-                    disabled
+                    
                     variant="outlined"
                     color="primary"
                     onClick={this.onSubmit}

@@ -2,28 +2,24 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { debounce } from "lodash";
-import { fetchCities } from "../actions/citiesActions";
 import { fetchStudent, updateStudent } from "../actions/studentsActions";
 import { deleteCity } from "../actions/cmsActions";
 import {
   Button,
   Card,
   Input,
-  Media,
-  Form,
   Label,
-  FormText,
   Container,
   CardHeader,
   CardBody,
   CardTitle,
-  FormGroupAddon,
-  FormGroupText,
+  Breadcrumb,
+  BreadcrumbItem,
   FormGroup,
   Row,
   Col
 } from "reactstrap";
-import Header from "../components/layout/Header";
+import { Link } from "react-router-dom";
 
 class StudentEdit extends Component {
   constructor(props) {
@@ -34,12 +30,45 @@ class StudentEdit extends Component {
       error: null,
       text: "",
       //EDIT
-      cities: [],
       students: [],
+      social: [
+        { name: "facebookF", title: "Facebook", id: 0, value: "" },
+        { name: "instagram", title: "Instagram", id: 1, value: "" },
+        { name: "twitter", title: "Twitter", id: 2, value: "" },
+        { name: "bloggerB", title: "Blog/Website", id: 3, value: "" },
+        { name: "skype", title: "Skype", id: 4, value: "" },
+        { name: "whatsapp", title: "Whatsapp", id: 5, value: "" },
+        { name: "github", title: "Github", id: 6, value: "" },
+        { name: "google", title: "Google", id: 7, value: "" },
+        { name: "linkedinIn", title: "Linked In", id: 8, value: "" },
+        { name: "mediumM", title: "Medium", id: 9, value: "" },
+        { name: "microsoft", title: "Microsoft", id: 10, value: "" },
+        { name: "pinterest", title: "Pintrest", id: 11, value: "" },
+        { name: "quora", title: "Quora", id: 12, value: "" },
+        { name: "youtube", title: "Youtube", id: 13, value: "" }
+      ],
+      socialbac: [
+        { name: "facebookF", title: "Facebook", id: 0, value: "" },
+        { name: "instagram", title: "Instagram", id: 1, value: "" },
+        { name: "twitter", title: "Twitter", id: 2, value: "" },
+        { name: "bloggerB", title: "Blog/Website", id: 3, value: "" },
+        { name: "skype", title: "Skype", id: 4, value: "" },
+        { name: "whatsapp", title: "Whatsapp", id: 5, value: "" },
+        { name: "github", title: "Github", id: 6, value: "" },
+        { name: "google", title: "Google", id: 7, value: "" },
+        { name: "linkedinIn", title: "Linked In", id: 8, value: "" },
+        { name: "mediumM", title: "Medium", id: 9, value: "" },
+        { name: "microsoft", title: "Microsoft", id: 10, value: "" },
+        { name: "pinterest", title: "Pintrest", id: 11, value: "" },
+        { name: "quora", title: "Quora", id: 12, value: "" },
+        { name: "youtube", title: "Youtube", id: 13, value: "" }
+      ],
       studentname: "",
       sprno: "",
+      rollno: "",
       emailid: "",
       nickname: "",
+      description: "",
       dob: "",
       anniversary: "",
       status: "",
@@ -55,26 +84,29 @@ class StudentEdit extends Component {
     };
   }
   componentDidMount() {
-    this.props.fetchStudent(this.props.match.params.url);
-    this.setState({
-      students: this.props.students.students
-    });
+    if (this.props.match.params.url !== "new") {
+      this.props.fetchStudent(this.props.match.params.url);
+      this.setState({
+        students: this.props.students.students
+      });
+    }
   }
   componentWillReceiveProps(nextProps) {
+    console.log("STUDENTS EDIT");
+    console.log(nextProps);
     if (this.props !== nextProps) {
-      console.log("componentWillReceiveProps", nextProps);
-      let allcities = nextProps.students.student;
-      console.log(allcities);
       let selectedValue = nextProps.students.student[0] || {};
-      console.log(selectedValue);
 
       if (Object.keys(selectedValue).length > 0) {
         this.setState({
           id: selectedValue._id,
           studentname: selectedValue.studentname,
           sprno: selectedValue.sprno,
+          rollno: selectedValue.rollno,
           emailid: selectedValue.emailid,
+          phoneno: selectedValue.phoneno,
           nickname: selectedValue.nickname,
+          description: selectedValue.description,
           dob: selectedValue.dob,
           anniversary: selectedValue.anniversary,
           status: selectedValue.status,
@@ -88,6 +120,15 @@ class StudentEdit extends Component {
           authorid: selectedValue.authorid,
           showlist: false
         });
+        console.log(selectedValue.social);
+        if(selectedValue.social){
+          this.setState({
+            social:  JSON.parse(selectedValue.social) 
+          });
+        }
+        
+        console.log(this.state.social);
+        
       }
     }
   }
@@ -109,37 +150,28 @@ class StudentEdit extends Component {
   // SUBMIT
   onSubmit = e => {
     e.preventDefault();
-
+    console.log('social', this.state.social);
     const formData = new FormData();
     formData.append("studentname", this.state.studentname);
     formData.append("sprno", this.state.sprno);
+    formData.append("rollno", this.state.rollno);
     formData.append("flagimg", this.state.flagimg);
+    formData.append("emailid", this.state.emailid);
+    formData.append("phoneno", this.state.phoneno);
+    formData.append("nickname", this.state.nickname);
+    formData.append("description", this.state.description);
+    formData.append("dob", this.state.dob);
+    formData.append("anniversary", this.state.anniversary);
+    formData.append("status", this.state.status);
+    formData.append("native", this.state.native);
+    formData.append("location", this.state.location);
+    formData.append("work", this.state.work);
+    formData.append("title", this.state.title);
     formData.append("url", this.state.url);
     formData.append("id", this.state.id);
-    console.log(";formData");
-    console.log(formData);
+    formData.append("social", JSON.stringify(this.state.social));
     this.props.updateStudent(this.state.id, formData);
-
-    this.setState({
-      id: "",
-      studentname: "",
-      sprno: "",
-      emailid: "",
-      nickname: "",
-      dob: "",
-      anniversary: "",
-      status: "",
-      native: "",
-      location: "",
-      work: "",
-      title: "",
-      url: "",
-      flagimg: null,
-      previewFile: null,
-      showlist: true
-    });
-
-    this.props.fetchStudent();
+    this.props.fetchStudent(this.props.match.params.url);
   };
 
   // DELETE BUTTON
@@ -160,14 +192,18 @@ class StudentEdit extends Component {
 
   //CONVERT TO SNAKE CASE
   onSnakecase = e => {
-    var val = e.target.value;
     this.setState({
-      [e.target.name]: e.target.value,
-      url: val
-        .split(" ")
-        .join("_")
-        .toLowerCase()
+      [e.target.name]: e.target.value
     });
+  };
+  onSocialChange = e => {
+    const { social } = this.state;
+    const thisIndex = social.findIndex(item => item.name === e.target.name);
+    if (thisIndex >= 0) {
+      social[thisIndex].value = e.target.value;
+    }
+    this.setState({ social });
+    console.log(social);
   };
 
   render() {
@@ -192,6 +228,12 @@ class StudentEdit extends Component {
             onSubmit={this.onSubmit}
           >
             <Container fluid>
+              <Row>
+                <Col>
+                  <h4 className="pt-1">College Based Info</h4>
+                  <hr className="line-primary " />
+                </Col>
+              </Row>
               <Row>
                 <Col>
                   <FormGroup>
@@ -223,20 +265,41 @@ class StudentEdit extends Component {
               <Row>
                 <Col>
                   <FormGroup>
-                    <Label for="sprno">SPR No</Label>
+                    <Label for="rollno">Roll No</Label>
                     <Input
                       label="Please enter SPR No:"
-                      placeholder="SPR No"
+                      placeholder="Roll No"
                       type="text"
-                      name="sprno"
-                      value={this.state.sprno}
+                      name="rollno"
+                      value={this.state.rollno}
                       onChange={this.onSnakecase}
                     />
                   </FormGroup>
                 </Col>
                 <Col>
                   <FormGroup>
-                    <Label for="exampleEmail">Email</Label>
+                    <Label for="sprno">SPR No</Label>
+                    <Input
+                      label="Please enter SPR No:"
+                      placeholder="SPR No"
+                      type="text"
+                      name="sprno"
+                      value={this.state.rollno}
+                      onChange={this.onSnakecase}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <h4 className="pt-1">Contact Info</h4>
+                  <hr className="line-primary " />
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <FormGroup>
+                    <Label for="emailid">Email</Label>
                     <Input
                       label="Please enter Email:"
                       placeholder="Email"
@@ -246,6 +309,25 @@ class StudentEdit extends Component {
                       onChange={this.onSnakecase}
                     />
                   </FormGroup>
+                </Col>
+                <Col>
+                  <FormGroup>
+                    <Label for="phoneno">Phone No</Label>
+                    <Input
+                      label="Please enter Phone No:"
+                      placeholder="Phone No"
+                      type="text"
+                      name="phoneno"
+                      value={this.state.phoneno}
+                      onChange={this.onSnakecase}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <h4 className="pt-1">Personal Info</h4>
+                  <hr className="line-primary " />
                 </Col>
               </Row>
               <Row>
@@ -274,6 +356,28 @@ class StudentEdit extends Component {
                       onChange={this.onSnakecase}
                     />
                   </FormGroup>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <FormGroup>
+                    <Label for="description">Description</Label>
+                    <Input
+                      label="Please enter description:"
+                      placeholder="description"
+                      type="textarea"
+                      name="description"
+                      value={this.state.description}
+                      onChange={this.onSnakecase}
+                      className="form-control"
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <h4 className="pt-1">Work and Location</h4>
+                  <hr className="line-primary " />
                 </Col>
               </Row>
               <Row>
@@ -334,23 +438,36 @@ class StudentEdit extends Component {
                 </Col>
               </Row>
               <Row>
+                <Col>
+                  <h4 className="pt-1">Social</h4>
+                  <hr className="line-primary " />
+                </Col>
+              </Row>
+              <Row>
+                {this.state.social.map(socialItem => {
+                  return (
+                    <React.Fragment key={socialItem.id}>
+                      <Col lg="6">
+                        <FormGroup>
+                          <Label for="location"> {socialItem.title}</Label>
+                          <Input
+                            type="text"
+                            name={socialItem.name}
+                            value={socialItem.link}
+                            onChange={this.onSocialChange}
+                          />
+                        </FormGroup>
+                      </Col>
+                    </React.Fragment>
+                  );
+                })}
+              </Row>
+
+              <Row>
                 <Col></Col>
                 <Col></Col>
               </Row>
             </Container>
-
-            <FormGroup>
-              <Label for="work">url</Label>
-              <Input
-                disabled
-                label="Please enter nickname:"
-                placeholder="url"
-                type="url"
-                name="url"
-                value={this.state.url}
-                onChange={this.onSnakecase}
-              />
-            </FormGroup>
           </form>
 
           {/* SUBMIT BUTTON */}
@@ -412,7 +529,17 @@ class StudentEdit extends Component {
             <Row className="justify-content-center">
               <Col lg="4">
                 <h1 className="text-center"> Students Edit </h1>
-                <p>Editing : {this.state.studentname}</p>
+                <Breadcrumb>
+                  <BreadcrumbItem>
+                    <Link to="/">Home</Link>
+                  </BreadcrumbItem>
+                  <BreadcrumbItem>
+                    <Link to="/students">Students</Link>
+                  </BreadcrumbItem>
+                  <BreadcrumbItem active>
+                    Edit : {this.state.studentname}
+                  </BreadcrumbItem>
+                </Breadcrumb>
                 <hr className="line-primary m-auto" />
                 <br /> <br />
               </Col>
@@ -434,7 +561,7 @@ class StudentEdit extends Component {
                           </CardBody>
                         </Card>
                         <Card className="card-coin card-plain card">
-                          <CardTitle>Preview.</CardTitle>
+                          <CardTitle className="small">PREVIEW</CardTitle>
                           <CardBody className="p-3">
                             {previewFile === null ? noPreview : preview}
                           </CardBody>
@@ -455,7 +582,6 @@ class StudentEdit extends Component {
 
 const mapStateToProps = state => {
   return {
-    cities: state.cities,
     students: state.students,
     profile: state.profile,
     auth: state.auth
@@ -463,7 +589,6 @@ const mapStateToProps = state => {
 };
 
 StudentEdit.propTypes = {
-  cities: PropTypes.object,
   students: PropTypes.object,
   fetchStudent: PropTypes.func
 };

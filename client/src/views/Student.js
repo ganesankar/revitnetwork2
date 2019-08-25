@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -13,7 +14,7 @@ import {
   faBaby,
   faEnvelope
 } from "@fortawesome/free-solid-svg-icons";
-
+import { fab } from '@fortawesome/free-brands-svg-icons'
 import {
   Media,
   Button,
@@ -28,6 +29,8 @@ import {
 } from "reactstrap";
 import { fetchStudent } from "../actions/studentsActions";
 
+import NotFound from "../components/errors/NotFound";
+
 class Student extends Component {
   constructor(props) {
     super(props);
@@ -39,6 +42,39 @@ class Student extends Component {
   componentDidMount() {
     this.props.fetchStudent(this.props.match.params.url);
   }
+  renderSwitch(param) {
+    switch (param) {
+      case "facebookF":
+        return ['fab', 'facebook'];
+      case "instagram":
+        return ['fab', 'facebook'];
+      case "twitter":
+        return ['fab', 'facebook'];
+      case "skype":
+        return ['fab', 'facebook'];
+      case "whatsapp":
+        return ['fab', 'facebook'];
+      case "github":
+        return ['fab', 'facebook'];
+      case "google":
+        return ['fab', 'facebook'];
+      case "linkedinIn":
+        return ['fab', 'facebook'];
+      case "mediumM":
+        return ['fab', 'facebook'];
+      case "microsoft":
+        return ['fab', 'facebook'];
+      case "pinterest":
+        return ['fab', 'facebook'];
+      case "quora":
+        return ['fab', 'facebook'];
+      case "youtube":
+        return ['fab', 'facebook'];
+
+      default:
+        return ['fab'];
+    }
+  }
   toggleTabs = (e, stateName, index) => {
     e.preventDefault();
     this.setState({
@@ -46,109 +82,120 @@ class Student extends Component {
     });
   };
   render() {
-    const { student } = this.props.students;
+    console.log("STUDENTS VIEW");
+    console.log(this.props.students);
+    const userIcon =
+      "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDMyIDMyIiBoZWlnaHQ9IjMycHgiIGlkPSJMYXllcl8xIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAzMiAzMiIgd2lkdGg9IjMycHgiIHhtbDpzcGFjZT0icHJlc2VydmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjxnPjxwYXRoIGQ9Ik0yMi40MTcsMTQuODM2Yy0xLjIwOSwyLjc2My0zLjg0Niw1LjA3NC02LjQwMyw1LjA3NGMtMy4xMjIsMC01LjM5LTIuMjg0LTYuNTk5LTUuMDQ2ICAgYy03LjAzMSwzLjY0Mi02LjE0NSwxMi44NTktNi4xNDUsMTIuODU5YzAsMS4yNjIsMC45OTQsMS40NDUsMi4xNjIsMS40NDVoMTAuNTgxaDEwLjU2NWMxLjE3LDAsMi4xNjctMC4xODQsMi4xNjctMS40NDUgICBDMjguNzQ2LDI3LjcyMywyOS40NDcsMTguNDc5LDIyLjQxNywxNC44MzZ6IiBmaWxsPSIjNTE1MTUxIi8+PHBhdGggZD0iTTE2LjAxMywxOC40MTJjMy41MjEsMCw2LjMyLTUuMDQsNi4zMi05LjIwNGMwLTQuMTY1LTIuODU0LTcuNTQxLTYuMzc1LTcuNTQxICAgYy0zLjUyMSwwLTYuMzc2LDMuMzc2LTYuMzc2LDcuNTQxQzkuNTgyLDEzLjM3MywxMi40OTEsMTguNDEyLDE2LjAxMywxOC40MTJ6IiBmaWxsPSIjNTE1MTUxIi8+PC9nPjwvc3ZnPg==";
+
+    const { student, getStudentLoading } = this.props.students;
     const studentOne = student[0] || {};
+    let socialAcc = [];
+    if (Object.keys(studentOne).length > 0 && studentOne.social.length > 0) {
+      socialAcc = JSON.parse(studentOne.social);
+    }
+    console.log(socialAcc);
     return (
       <div className="profile-page pt-5">
-        <Container className="align-items-center pt-5">
-          <Row>
-            <Col lg="6" md="6">
-              <h1 className="profile-title text-left">
-                {" "}
-                {studentOne.studentname}
-              </h1>
-              <h5 className="text-on-back">{studentOne.sprno}</h5>
-              <p className="profile-description">{studentOne.sprno}</p>
-              <div className="btn-wrapper profile pt-3">
-                {studentOne.social &&
-                  studentOne.social.length > 0 &&
-                  studentOne.social.map(sociallink => {
-                    return (
-                      <React.Fragment key={sociallink.id}>
-                        <Button
-                          className="btn-icon btn-round"
-                          color={sociallink.name}
-                          href={sociallink.url}
-                          target="_blank"
-                        >
-                          {" "}
-                          <i className={sociallink.icon} />
-                        </Button>
-                      </React.Fragment>
-                    );
-                  })}
-              </div>
-            </Col>
-            <Col className="ml-auto mr-auto" lg="4" md="6">
-              <Card className="card-coin card-plain">
-                <CardHeader>
-                  {student.flagimg ? (
-                    <Media
-                      object
-                      data-src={student.flagimg}
-                      alt="Generic placeholder image"
+        {getStudentLoading && <div> Loading</div>}
+        {!getStudentLoading && Object.keys(studentOne).length === 0 ? (
+          <NotFound status="400" />
+        ) : (
+          <Container className="align-items-center pt-5">
+            <Row>
+              <Col lg="6" md="6">
+                <h1 className="profile-title text-left">
+                  {" "}
+                  {studentOne.studentname}
+                </h1>
+                <h5 className="text-on-back">{studentOne.sprno}</h5>
+                <p className="profile-description">{studentOne.sprno}</p>
+                <div className="btn-wrapper profile pt-3">
+                  {socialAcc.length > 0 &&
+                    socialAcc.map(sociallink => {
+                      return (
+                        <React.Fragment key={sociallink.id}>
+                          {sociallink.value && (
+                            <Link
+                              color={sociallink.name}
+                              to={sociallink.value}
+                              target="_blank"
+                              className="btn-icon btn-round"
+                            >
+                             <FontAwesomeIcon icon="check-square" />
+                             <FontAwesomeIcon icon={['fab', 'apple']} />
+                            </Link>
+                          )}
+                        </React.Fragment>
+                      );
+                    })}
+                </div>
+              </Col>
+              <Col className="ml-auto mr-auto" lg="4" md="6">
+                <Card className="card-coin card-plain">
+                  <CardHeader>
+                    <img
+                      alt="cmsImage"
+                      className="img-center img-fluid  rounded-circle"
+                      src={studentOne.flagimg ? studentOne.flagimg : userIcon}
                     />
-                  ) : (
-                    <FontAwesomeIcon
-                      icon={faUserGraduate}
-                      size="4x"
-                      className={`text-default`}
-                    />
-                  )}
-                </CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col className="text-center" md="12">
-                      <h4 className="text-uppercase">{studentOne.nickname}</h4>
-                      <span>INFO</span>
-                      <hr className="line-success" />
-                    </Col>
-                  </Row>
-                  <Row>
-                    <ListGroup>
-                      {studentOne.dob && (
-                        <ListGroupItem>
-                          {" "}
-                          <FontAwesomeIcon icon={faBirthdayCake} />{" "}
-                          {studentOne.dob}
-                        </ListGroupItem>
-                      )}
-                      {studentOne.anniversary && (
-                        <ListGroupItem>
-                          <FontAwesomeIcon icon={faGlassCheers} />{" "}
-                          {studentOne.anniversary}
-                        </ListGroupItem>
-                      )}
-                      {studentOne.emailid && (
-                        <ListGroupItem>
-                          <FontAwesomeIcon icon={faEnvelope} />{" "}
-                          {studentOne.emailid}
-                        </ListGroupItem>
-                      )}
-                      {studentOne.location && (
-                        <ListGroupItem>
-                          <FontAwesomeIcon icon={faMapMarkerAlt} />{" "}
-                          {studentOne.location}
-                        </ListGroupItem>
-                      )}
-                      {studentOne.native && (
-                        <ListGroupItem>
-                          <FontAwesomeIcon icon={faBaby} /> {studentOne.native}
-                        </ListGroupItem>
-                      )}
-                      {studentOne.work && (
-                        <ListGroupItem>
-                          <FontAwesomeIcon icon={faBriefcase} />{" "}
-                          {studentOne.work}
-                        </ListGroupItem>
-                      )}
-                    </ListGroup>
-                  </Row>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-        </Container>
+                  </CardHeader>
+                  <CardBody>
+                    <Row>
+                      <Col className="text-center" md="12">
+                        <h4 className="text-uppercase">
+                          {studentOne.nickname}
+                        </h4>
+                        <span>INFO</span>
+                        <hr className="line-success" />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <ListGroup>
+                        {studentOne.dob && (
+                          <ListGroupItem>
+                            {" "}
+                            <FontAwesomeIcon icon={faBirthdayCake} />{" "}
+                            {studentOne.dob}
+                          </ListGroupItem>
+                        )}
+                        {studentOne.anniversary && (
+                          <ListGroupItem>
+                            <FontAwesomeIcon icon={faGlassCheers} />{" "}
+                            {studentOne.anniversary}
+                          </ListGroupItem>
+                        )}
+                        {studentOne.emailid && (
+                          <ListGroupItem>
+                            <FontAwesomeIcon icon={faEnvelope} />{" "}
+                            {studentOne.emailid}
+                          </ListGroupItem>
+                        )}
+                        {studentOne.location && (
+                          <ListGroupItem>
+                            <FontAwesomeIcon icon={faMapMarkerAlt} />{" "}
+                            {studentOne.location}
+                          </ListGroupItem>
+                        )}
+                        {studentOne.native && (
+                          <ListGroupItem>
+                            <FontAwesomeIcon icon={faBaby} />{" "}
+                            {studentOne.native}
+                          </ListGroupItem>
+                        )}
+                        {studentOne.work && (
+                          <ListGroupItem>
+                            <FontAwesomeIcon icon={faBriefcase} />{" "}
+                            {studentOne.work}
+                          </ListGroupItem>
+                        )}
+                      </ListGroup>
+                    </Row>
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row>
+          </Container>
+        )}
       </div>
     );
   }

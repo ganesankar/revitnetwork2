@@ -1,30 +1,13 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
-import {
-  Card,
-  Container,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Button,
-  Row,
-  Col,
-  Input,
-  Media
-} from "reactstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faUserGraduate,
-  faChalkboardTeacher,
-  faCalendar,
-  faLink
-} from "@fortawesome/free-solid-svg-icons";
+import { Container, Row, Col, Input } from "reactstrap";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { fetchStudents } from "../actions/studentsActions";
 import { getCurrentProfile } from "./../actions/profileActions";
 import { debounce } from "lodash";
+
+import UserListCard from "../components/list/userListCard";
+import NotFound from "../components/errors/NotFound";
 
 class Students extends Component {
   constructor(props) {
@@ -45,15 +28,9 @@ class Students extends Component {
   }, 500);
 
   render() {
-    console.log(this.props.students);
-    /*
-    let filteredstudents = this.props.students.students.filter(student => {
-      return (
-        student.studentname.toLowerCase().includes(this.state.query.toLowerCase()) ||
-        student.nickname.toLowerCase().includes(this.state.query.toLowerCase())
-      );
-    });
-     */
+    console.log("STUDENTS VIEW");
+    const { students } = this.props.students;
+    console.log(students);
     let filteredstudents = this.props.students.students || [];
     return (
       <div>
@@ -61,16 +38,12 @@ class Students extends Component {
           <Container>
             <Row className="justify-content-center">
               <Col lg="4">
-                <h1 className="text-center">
-                  <FontAwesomeIcon icon={faUserGraduate} />
-                  Students
-                </h1>
+                <h1 className="text-center">Students</h1>
 
                 <hr className="line-primary m-auto" />
                 <Row className="row-grid justify-content-center">
                   <Col lg="6"></Col>
                   <Col lg="6">
-                    {" "}
                     <Input
                       id="filled-with-placeholder"
                       label="Search Destinations"
@@ -85,89 +58,35 @@ class Students extends Component {
                 </Row>
               </Col>
             </Row>
-            {filteredstudents.length < 1 ? (
-              <div className="paragraphText">
-                There are no destinations matching your search query.
-              </div>
-            ) : (
-              <React.Fragment>
-                {filteredstudents.map(student => {
-                  return (
-                    <React.Fragment key={student._id}>
-                      <Row>
+            <Row>
+              {filteredstudents.length < 1 ? (
+                <div className="paragraphText">
+                  There are no destinations matching your search query.
+                </div>
+              ) : (
+                <React.Fragment>
+                  {filteredstudents.map(student => {
+                    console.log("student0", student);
+                    return (
+                      <React.Fragment key={student._id}>
                         {" "}
                         <Col lg="4">
-                          <Card className="card-coin card-plain">
-                            <div >
-                              <Link
-                                to={{
-                                  pathname: "/student/" + student.url,
-                                  state: {
-                                    city: student.cityname,
-                                    country: student.country,
-                                    url: student.flagimg
-                                  }
-                                }}
-                                className="citylist "
-                              >
-                                <div className="icon icon-primary">
-                                  {student.flagimg ? (
-                                    <img alt="cmsImage" className="img-center img-fluid  rounded-circle" src={student.flagimg} />
-                                    
-                                  ) : (
-                                    <FontAwesomeIcon
-                                      icon={faUserGraduate}
-                                      size="4x"
-                                      className={`text-default`}
-                                    />
-                                  )}
-                                </div>
-                                <h4 className="info-title">
-                                  {student.studentname}
-                                </h4>
-                              </Link>
-                              <hr className="line-primary" />
-                              <p>
-                                {student.emailid} <br />
-                                {student.location}
-                                <br />
-                                {student.nickname}
-                              </p>
-                            </div>
-                            <CardFooter className="text-center">
-                              <NavLink
-                                to={{
-                                  pathname: "/student/edit/" + student.url
-                                }}
-                              >
-                                <Button className="btn-simple" color="primary">
-                                  VIEW ALL
-                                </Button>
-                              </NavLink>
-                              <NavLink
-                                to={{
-                                  pathname: "/student/edit/" + student.url
-                                }}
-                              >
-                                <Button className="btn-simple" color="success">
-                                  VIEW ALL
-                                </Button>
-                              </NavLink>
-                            </CardFooter>
-                          </Card>
+                          <UserListCard
+                            profileData={student}
+                            viewLink={true}
+                            editLink={true}
+                            viewPath="/student/"
+                            editPath="/student/edit/"
+                          />
                         </Col>
-                      </Row>
-                    </React.Fragment>
-                  );
-                })}
-              </React.Fragment>
-            )}
+                      </React.Fragment>
+                    );
+                  })}
+                </React.Fragment>
+              )}
+            </Row>
           </Container>
         </section>
-        <div className="citysearchflex"></div>
-
-        {/* students */}
-        <div></div>
       </div>
     );
   }

@@ -32,11 +32,23 @@ const fileFilter = (req, file, cb) => {
 // @access Public
 
 router.get("/student", (req, res) => {
-  Studentmodel.find().then(student => res.json(student));
+  Studentmodel.find()
+    .then(student => res.json(student))
+    .catch(err => {
+      res.status(400).json({
+        error: err
+      });
+    });
 });
 
 router.get("/student/:url", (req, res) => {
-  Studentmodel.find({ url: req.params.url }).then(student => res.json(student));
+  Studentmodel.find({ _id: req.params.url })
+    .then(student => res.json(student))
+    .catch(err => {
+      res.status(400).json({
+        error: err
+      });
+    });
 });
 //POST
 // @route  api/student
@@ -48,17 +60,64 @@ const upload = multer({
   fileFilter: fileFilter
 });
 
-router.post("/student", upload.any(), (req, res, next) => {
-  
-  console.log('student posr');console.log(req.body);
+router.post("/student/:id", upload.any(), (req, res, next) => {
+  console.log("student post");
   const { errors, isValid } = validateStudent(req.body);
   // Check Validation
   if (!isValid) {
     return res.status(400).json(errors);
   }
-  const dbid = req.body._id || "";
-  const flagimg = "/uploads/" + req.files[0].filename;
-  const city = new Studentmodel({
+  const imagenotupdated = req.body.flagimg;
+  const flagimg =
+    req.body.flagimg === null || req.body.flagimg === undefined
+      ? "/uploads/students/" + req.files[0].filename
+      : imagenotupdated;
+
+  const cmsfields = {};
+  cmsfields.studentname = req.body.studentname;
+  cmsfields.sprno = req.body.sprno;
+  cmsfields.emailid = req.body.emailid;
+  cmsfields.nickname = req.body.nickname;
+  cmsfields.dob = req.body.dob;
+  cmsfields.anniversary = req.body.anniversary;
+  cmsfields.status = req.body.status;
+  cmsfields.native = req.body.native;
+  cmsfields.location = req.body.location;
+  cmsfields.work = req.body.work;
+  cmsfields.title = req.body.title;
+  cmsfields.social = req.body.social;
+  cmsfields.url = req.body.url;
+  cmsfields.flagimg = flagimg;
+
+  Studentmodel.findOneAndUpdate(
+    { _id: req.params.id },
+    { $set: cmsfields },
+    { new: true }
+  )
+    .then(() => {
+      res.status(201).json({
+        message: "Student Profile Updated"
+      });
+    })
+    .catch(err => {
+      res.status(500).json({
+        error: err
+      });
+    });
+});
+
+router.post("/student", upload.any(), (req, res, next) => {
+  const { errors, isValid } = validateStudent(req.body);
+  // Check Validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+  const imagenotupdated = req.body.flagimg;
+  const flagimg =
+    req.body.flagimg === null || req.body.flagimg === undefined
+      ? "/uploads/students/" + req.files[0].filename
+      : imagenotupdated;
+  const newstudent = new Studentmodel({
     studentname: req.body.studentname,
     sprno: req.body.sprno,
     emailid: req.body.emailid,
@@ -72,29 +131,20 @@ router.post("/student", upload.any(), (req, res, next) => {
     title: req.body.title,
     social: req.body.social,
     url: req.body.url,
-    id: req.body.id,
     flagimg: flagimg
   });
-  if (dbid) {
-    Studentmodel.findOneAndUpdate(
-      { _id: dbid },
-      
-      { $set: city },
-      { new: true }
-    ).then(city => res.json(city));
-  } else {
-    city
-      .save()
-      .then(() => {
-        res.status(201).json({
-          message: "Created City successfully"
-        });
-      })
-      .catch(err => {
-        res.status(500).json({
-          error: err
-        });
+
+  newstudent
+    .save()
+    .then(() => {
+      res.status(201).json({
+        message: newstudent
       });
-  }
+    })
+    .catch(err => {
+      res.status(500).json({
+        error: err
+      });
+    });
 });
 module.exports = router;
