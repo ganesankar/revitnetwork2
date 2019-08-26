@@ -10264,21 +10264,17 @@ hr {
   margin-top: 1rem;
   margin-bottom: 1rem; }
 
-.icon {
-  width: auto;
-  height: auto; }
-  .icon i, .icon svg {
-    font-size: auto-0.75; }
 
+/*
 .icon + .icon-text {
   padding-left: 1rem;
-  width: calc(100% - auto - 1); }
+  /*width: calc(100% - auto - 1); }* /
 
 .icon-xl {
   width: 5rem;
   height: 5rem; }
   .icon-xl i, .icon-xl svg {
-    font-size: 4.25rem; }
+
 
 .icon-xl + .icon-text {
   width: calc(100% - $icon-size-xl - 1); }
@@ -10300,7 +10296,7 @@ hr {
 
 .icon-sm + .icon-text {
   width: calc(100% - $icon-size-sm - 1); }
-
+*/
 .icon-shape {
   padding: 12px;
   text-align: center;
