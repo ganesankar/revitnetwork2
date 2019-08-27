@@ -31,7 +31,7 @@ import {
 } from "../actions/authActions";
 import { GoogleLogin } from "react-google-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
-import { googleClientID } from "./../keys.js";
+// import { googleClientID } from "./../keys.js";
 
 import {
   FacebookLoginButton,
@@ -229,7 +229,7 @@ class Login extends Component {
                         </Button>
 
                         <GoogleLogin
-                    clientId={googleClientID}
+                    clientId={157852765565-21eh7v2tvqv5r7t8fg28o6073kqt3so3.apps.googleusercontent.com}
                     render={renderProps => (
                       <GoogleLoginButton
                         className="btn-round"
